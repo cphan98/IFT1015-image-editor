@@ -96,15 +96,22 @@ def dessinerBordure(couleurs, taille, espace):
             setPixel(coin2Tab[i].x, y1, "#000")
         # bordure inférieure
         for x2 in range(coin1Tab[i].x, coin2Tab[i].x + 1):
-            setPixel(x2, coin2Tab[i].y, "000")
+            setPixel(x2, coin2Tab[i].y, "#000")
         # bordure gauche
         for y2 in range(coin1Tab[i].y, coin2Tab[i].y + 1):
             setPixel(coin1Tab[i].x, y2, "#000")
 
 
-def dessinerEffacer():
+def dessinerEffacer(couleurs, taille, espace):
 
     # La procédure dessinerEffacer dessine un X rouge dans le bouton effacer.
+
+    coin1Tab = coin1(couleurs, taille, espace)
+    i = 1
+    for _ in range(taille-2):
+        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + i, "#f00")
+        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + taille - i, "#f00")
+        i += 1
 
 
 def trouverBouton(boutons, position):
@@ -161,6 +168,7 @@ def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEff
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
     dessinerBoutons(couleurs, taille, espace, couleurEffacer)
     dessinerBordure(couleurs, taille, espace)
+    dessinerEffacer(couleurs, taille, espace)
 
 
 def testDessiner():
@@ -185,7 +193,8 @@ def testDessiner():
         x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False), struct(coin1=struct(x=42, y=6), coin2=struct(x=54, y=18), couleur="#000", effacer=False)]
     assert creerBoutons(["#000", "#f00"], 12, 6, "#00f") == [struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#00f", effacer=True), struct(coin1=struct(
         x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False), struct(coin1=struct(x=42, y=6), coin2=struct(x=54, y=18), couleur="#f00", effacer=False)]
-    # assert creerBoutons() ==
+    assert creerBoutons(["#f00"], 4, 1, "#000") == [struct(coin1=struct(x=1, y=1), coin2=struct(
+        x=5, y=5), couleur="#000", effacer=True), struct(coin1=struct(x=6, y=1), coin2=struct(x=10, y=5), couleur="#f00", effacer=False)]
 
 
 testDessiner()
