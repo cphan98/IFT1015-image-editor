@@ -108,7 +108,7 @@ def dessinerEffacer(couleurs, taille, espace):
 
     coin1Tab = coin1(couleurs, taille, espace)
     i = 1
-    for _ in range(taille-2):
+    for _ in range(taille-1):
         setPixel(coin1Tab[0].x + i, coin1Tab[0].y + i, "#f00")
         setPixel(coin1Tab[0].x + i, coin1Tab[0].y + taille - i, "#f00")
         i += 1
@@ -156,6 +156,23 @@ def imageOriginale():
         for j in range(getScreenHeight()):
             imageOriginale[i][j].append(getPixel(i, j))
     return imageOriginale
+
+
+def debut(hauteurMenu):
+
+    # La fonction debut retourne un enregistrement des coordonnées
+    # cartésiennes du premier clic dans la section pour dessiner.
+
+    while True:
+        getMouse()
+        sleep(0.01)
+        if getMouse().button == 0 or getMouse().button == 2:
+            continue
+        else:
+            souris = getMouse()
+            if souris.x > 0 and souris.x < getScreenWidth():
+                if souris.y > hauteurMenu and souris.y < getScreenHeight():
+                    return struct(x=souris.x, y=souris.y)
 
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
