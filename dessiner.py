@@ -142,7 +142,7 @@ def imageOriginaleTab(largeur, hauteur):
         return None
     else:
         for i in range(largeur):
-            imageOriginale[i] = [None] * hauteur
+            imageOriginaleTab[i] = [None] * hauteur
         return imageOriginaleTab
 
 
@@ -248,8 +248,8 @@ def testDessiner():
     # tests pour imageOriginaleTab
 
     assert imageOriginaleTab(0, 10) == None
-    assert imageOriginaleTab(1, 0) == [None]
-    assert imageOriginaleTab(3, 0) == [None, None, None]
+    assert imageOriginaleTab(1, 0) == [[]]
+    assert imageOriginaleTab(3, 0) == [[], [], []]
     assert imageOriginaleTab(1, 1) == [[None]]
     assert imageOriginaleTab(1, 3) == [[None, None, None]]
     assert imageOriginaleTab(3, 1) == [[None], [None], [None]]
