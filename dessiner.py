@@ -175,7 +175,7 @@ def testDessiner():
 
     # La procédure testDessiner test les fonctions et procédures.
 
-    # test pour coin1
+    # tests pour coin1
 
     assert coin1([], 12, 6) == [struct(x=6, y=6)]
     assert coin1(["#fff"], 12, 6) == [struct(x=6, y=6), struct(x=24, y=6)]
@@ -203,6 +203,22 @@ def testDessiner():
         x=5, y=5), couleur="#000", effacer=True), struct(coin1=struct(x=6, y=1), coin2=struct(x=10, y=5), couleur="#f00", effacer=False)]
 
     # tests pour trouverBouton
+
+    assert trouverBouton([], struct(x=12, y=12)) == None
+    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
+        x=12, y=12)) == struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)
+    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
+        x=3, y=3)) == None
+    assert trouverBouton([struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False)], struct(
+        x=30, y=12)) == struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False)
+    assert trouverBouton([struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False)], struct(
+        x=21, y=12)) == None
+    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
+        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=12, y=12)) == struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)
+    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
+        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=30, y=12)) == struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)
+    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
+        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=21, y=12)) == None
 
 
 testDessiner()
