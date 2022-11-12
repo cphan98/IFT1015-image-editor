@@ -175,15 +175,21 @@ def testDessiner():
 
     # La procédure testDessiner test les fonctions et procédures.
 
+    # test pour coin1
+
     assert coin1([], 12, 6) == [struct(x=6, y=6)]
     assert coin1(["#fff"], 12, 6) == [struct(x=6, y=6), struct(x=24, y=6)]
     assert coin1(["#fff", "#000"], 12, 6) == [struct(
         x=6, y=6), struct(x=24, y=6), struct(x=42, y=6)]
 
+    # tests pour coin2
+
     assert coin2([], 12, 6) == [struct(x=18, y=18)]
     assert coin2(["#fff"], 12, 6) == [struct(x=18, y=18), struct(x=36, y=18)]
     assert coin2(["#fff", "#000"], 12, 6) == [struct(
         x=18, y=18), struct(x=36, y=18), struct(x=54, y=18)]
+
+    # tests pour creerBoutons
 
     assert creerBoutons([], 12, 6, "#fff") == [struct(coin1=struct(
         x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)]
@@ -195,6 +201,8 @@ def testDessiner():
         x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False), struct(coin1=struct(x=42, y=6), coin2=struct(x=54, y=18), couleur="#f00", effacer=False)]
     assert creerBoutons(["#f00"], 4, 1, "#000") == [struct(coin1=struct(x=1, y=1), coin2=struct(
         x=5, y=5), couleur="#000", effacer=True), struct(coin1=struct(x=6, y=1), coin2=struct(x=10, y=5), couleur="#f00", effacer=False)]
+
+    # tests pour trouverBouton
 
 
 testDessiner()
