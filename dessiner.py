@@ -146,6 +146,18 @@ def imageOriginaleTab(largeur, hauteur):
         return imageOriginaleTab
 
 
+def imageOriginale():
+
+    # La fonction imageOriginale retourne le tableau des tableaux contenants
+    # les textes de couleurs de chaque pixel dans fenêtre de dessin.
+
+    imageOriginale = imageOriginaleTab(getScreenWidth(), getScreenHeight())
+    for i in range(getScreenWidth()):
+        for j in range(getScreenHeight()):
+            imageOriginale[i][j].append(getPixel(i, j))
+    return imageOriginale
+
+
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
