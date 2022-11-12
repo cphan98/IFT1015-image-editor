@@ -122,6 +122,16 @@ def trouverBouton(boutons, position):
     # si le point du paramètre position se trouve dans un des carrés formés
     # par les boutons.
 
+    if boutons == []:
+        return None
+    else:
+        for i in range(len(boutons)):
+            if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x:
+                if position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
+                    return boutons[i]
+                else:
+                    return None
+
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
@@ -173,7 +183,7 @@ def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEff
 
 def testDessiner():
 
-    # La procédure testDessiner test les fonctions et procédures.
+    # La procédure testDessiner teste les fonctions et procédures précêdentes.
 
     # tests pour coin1
 
@@ -219,6 +229,8 @@ def testDessiner():
         x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=30, y=12)) == struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)
     assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
         x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=21, y=12)) == None
+    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
+        x=12, y=3)) == None
 
 
 testDessiner()
