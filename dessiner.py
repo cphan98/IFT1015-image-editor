@@ -133,6 +133,19 @@ def trouverBouton(boutons, position):
                     return None
 
 
+def imageOriginaleTab(largeur, hauteur):
+
+    # La fonction imageOriginaleTab crée le tableau de imageOriginale.
+
+    imageOriginaleTab = [None] * largeur
+    if largeur == 0:
+        return None
+    else:
+        for i in range(largeur):
+            imageOriginale[i] = [None] * hauteur
+        return imageOriginaleTab
+
+
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
@@ -231,6 +244,16 @@ def testDessiner():
         x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=21, y=12)) == None
     assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
         x=12, y=3)) == None
+
+    # tests pour imageOriginaleTab
+
+    assert imageOriginaleTab(0, 10) == None
+    assert imageOriginaleTab(1, 0) == [None]
+    assert imageOriginaleTab(3, 0) == [None, None, None]
+    assert imageOriginaleTab(1, 1) == [[None]]
+    assert imageOriginaleTab(1, 3) == [[None, None, None]]
+    assert imageOriginaleTab(3, 1) == [[None], [None], [None]]
+    assert imageOriginaleTab(2, 2) == [[None, None], [None, None]]
 
 
 testDessiner()
