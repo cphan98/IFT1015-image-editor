@@ -15,10 +15,11 @@ espace = 6              # espace entre et au-dessus de chaque bouton en px
 couleurEffacer = "#fff"  # couleur pour effacer les dessins
 
 
-def coin1(couleurs, taille, espace):
+def coin1Bouton(couleurs, taille, espace):
 
-    # La fonction coin1 retourne un tableau d'enregistrement des coordonnées du
-    # coin supérieur gauche de chaque bouton de la barre de menu.
+    # La fonction coin1Bouton retourne un tableau d'enregistrement des
+    # coordonnées du coin supérieur gauche de chaque bouton de la barre de
+    # menu.
 
     coin1Tab = []   # tableau d'enregistrements  des coordonnées du coin supérieur gauche de chaque bouton
     i = 1
@@ -29,9 +30,9 @@ def coin1(couleurs, taille, espace):
     return coin1Tab
 
 
-def coin2(couleurs, taille, espace):
+def coin2Bouton(couleurs, taille, espace):
 
-    # La fonction coin2 retourne un tab;eau d'enregistrement des coordonnées du
+    # La fonction coin2Bouton retourne un tab;eau d'enregistrement des coordonnées du
     # coin inférieur droit de chaque bouton de la barre menu.
 
     coin2Tab = []   # tableau d'enregistrements des coordonnées du coin inférieur droit de chaque bouton
@@ -50,8 +51,8 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
     # dans la barre de menu, et retourne un tableau d'enregistrements qui
     # représente les boutons.
 
-    coin1Tab = coin1(couleurs, taille, espace)
-    coin2Tab = coin2(couleurs, taille, espace)
+    coin1Tab = coin1Bouton(couleurs, taille, espace)
+    coin2Tab = coin2Bouton(couleurs, taille, espace)
     boutons = []
     i = 0
     for _ in range(len(couleurs) + 1):
@@ -71,7 +72,7 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
 
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
-    coin1Tab = coin1(couleurs, taille, espace)
+    coin1Tab = coin1Bouton(couleurs, taille, espace)
     for i in range(len(couleurs) + 1):
         if i == 0:
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
@@ -85,8 +86,8 @@ def dessinerBordure(couleurs, taille, espace):
 
     # La procédure dessinerBordure dessine les bourdures de chaque bouton.
 
-    coin1Tab = coin1(couleurs, taille, espace)
-    coin2Tab = coin2(couleurs, taille, espace)
+    coin1Tab = coin1Bouton(couleurs, taille, espace)
+    coin2Tab = coin2Bouton(couleurs, taille, espace)
     for i in range(len(couleurs) + 1):
         # bordure supérieure
         for x1 in range(coin1Tab[i].x, coin2Tab[i].x + 1):
@@ -106,7 +107,7 @@ def dessinerEffacer(couleurs, taille, espace):
 
     # La procédure dessinerEffacer dessine un X rouge dans le bouton effacer.
 
-    coin1Tab = coin1(couleurs, taille, espace)
+    coin1Tab = coin1Bouton(couleurs, taille, espace)
     i = 1
     for _ in range(taille-1):
         setPixel(coin1Tab[0].x + i, coin1Tab[0].y + i, "#f00")
