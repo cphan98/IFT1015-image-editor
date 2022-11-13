@@ -186,7 +186,7 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
             continue
         else:
             if souris.x > 0 and souris.x < getScreenWidth() and souris.y > hauteurMenu and souris.y < getScreenHeight():
-                return struct(x=souris.x, y=souris.y)
+                struct(x=souris.x, y=souris.y)
             else:
                 for i in range(len(boutons)):
                     if souris.x > coin1Tab[i].x and souris.x < coin2Tab[i].x and souris.y > coin1Tab[i].y and souris.y < coin2Tab[i].y:
@@ -194,7 +194,7 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
                             fillRectangle(0, hauteurMenu, getScreenWidth(
                             ), getScreenHeight() - hauteurMenu, couleurEffacer)
                         else:
-                            return boutons[i].couleur
+                            boutons[i].couleur
 
 
 def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
