@@ -182,9 +182,15 @@ def traiterProchainClic(boutons):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
-    global couleurRectangle
-    global couleurEffacer
+    global couleurs
+    global taille
+    global espace
     global hauteurMenu
+    global couleurEffacer
+    global couleurRectangle
+
+    creerBoutons(couleurs, taille, espace, couleurEffacer)
+
     while True:
         souris = getMouse()
         sleep(0.01)
