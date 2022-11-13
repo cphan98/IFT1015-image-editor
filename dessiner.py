@@ -197,23 +197,21 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
     while True:
-        getMouse()
+        souris = getMouse()
         sleep(0.01)
-        if getMouse().button == 0 or getMouse().button == 2:
+        if souris.button == 0 or souris.button == 2:
             continue
         else:
-            if getMouse().x > 0 and getMouse().x < getScreenWidth():
-                if getMouse().y > hauteurMenu and getMouse().y < getScreenHeight():
-                    return struct(x=getMouse().x, y=getMouse().y)
+            if souris.x > 0 and souris.x < getScreenWidth() and souris.y > hauteurMenu and souris.y < getScreenHeight():
+                return struct(x=souris.x, y=souris.y)
             else:
                 for i in range(len(boutons)):
-                    if getMouse().x > coin1Tab[i].x and getMouse().x < coin2Tab[i].x:
-                        if getMouse().y > coin1Tab[i].y and getMouse().y < coin2Tab[i].y:
-                            if boutons[i].effacer == True:
-                                fillRectangle(0, hauteurMenu, getScreenWidth(
-                                ), getScreenHeight() - hauteurMenu, couleurEffacer)
-                            else:
-                                return boutons[i].couleur
+                    if souris.x > coin1Tab[i].x and souris.x < coin2Tab[i].x and souris.y > coin1Tab[i].y and souris.y < coin2Tab[i].y:
+                        if boutons[i].effacer == True:
+                            fillRectangle(0, hauteurMenu, getScreenWidth(
+                            ), getScreenHeight() - hauteurMenu, couleurEffacer)
+                        else:
+                            return boutons[i].couleur
 
 
 def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
