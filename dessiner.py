@@ -109,9 +109,9 @@ def dessinerEffacer(couleurs, taille, espace):
 
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     i = 1
-    for _ in range(taille-1):
+    for _ in range(taille - 1):
         setPixel(coin1Tab[0].x + i, coin1Tab[0].y + i, "#f00")
-        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + taille - i, "#f00")
+        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + taille - 1 - i, "#f00")
         i += 1
 
 
