@@ -47,9 +47,9 @@ def coin2Bouton(couleurs, taille, espace):
 
 def creerBoutons(couleurs, taille, espace, couleurEffacer):
 
-    # La fonction creerBoutons crée les boutons de couleurs et le bouton effacer
-    # dans la barre de menu, et retourne un tableau d'enregistrements qui
-    # représente les boutons.
+    # La fonction creerBoutons crée les boutons de couleurs et le bouton
+    # effacer dans la barre de menu, et retourne un tableau d'enregistrements
+    # qui représente les boutons.
 
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
@@ -159,23 +159,6 @@ def imageOriginale():
     return imageOriginale
 
 
-def debut(hauteurMenu):
-
-    # La fonction debut retourne un enregistrement des coordonnées
-    # cartésiennes du premier clic dans la section pour dessiner.
-
-    while True:
-        getMouse()
-        sleep(0.01)
-        if getMouse().button == 0 or getMouse().button == 2:
-            continue
-        else:
-            souris = getMouse()
-            if souris.x > 0 and souris.x < getScreenWidth():
-                if souris.y > hauteurMenu and souris.y < getScreenHeight():
-                    return struct(x=souris.x, y=souris.y)
-
-
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
@@ -184,7 +167,7 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
     # couleurs, debut, un enregistrement qui contient les coordonées
     # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
     # la couleur du rectangle.
-    
+
 
 def restaurerImage(imageOriginale, rectangle):
 
@@ -204,26 +187,34 @@ def ajouterRectangle(image, rectangle, couleur):
     # sont des enregistrements de coordonnées cartésiennes
 
 
-def traiterProchainClic(boutons):
+def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
 
     # La procédre traiterProchainClic attend le prochain clic de la souris de
     # l'utilisateur. Cette procédure détermine si le clic a lieu sur un
     # bouton de couleurs, le bouton effacer, ou dans la fenêtre de dessin.
 
+    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
+    coin1Tab = coin1Bouton(couleurs, taille, espace)
+    coin2Tab = coin2Bouton(couleurs, taille, espace)
     while True:
         getMouse()
         sleep(0.01)
         if getMouse().button == 0 or getMouse().button == 2:
             continue
         else:
-            for i in range(len(boutons)):
-                if (getMouse().x < coin1Tab[i].x and getMouse().x > coin2Tab[i].x):
-                    return False
-                if (getMouse().y < coin1Tab1[i].y and getMouse().y > coin2Tab[i].y):
-                    return False
-                else:
-                    return True
-            i+=1
+            if getMouse().x > 0 and getMouse().x < getScreenWidth():
+                if getMouse().y > hauteurMenu and getMouse().y < getScreenHeight():
+                    return struct(x=getMouse().x, y=getMouse().y)
+            else:
+                for i in range(len(boutons)):
+                    if getMouse().x > coin1Tab[i].x and getMouse().x < coin2Tab[i].x:
+                        if getMouse().y > coin1Tab[i].y and getMouse().y < coin2Tab[i].y:
+                            if boutons[i].effacer == True:
+                                fillRectangle(0, hauteurMenu, getScreenWidth(
+                                ), getScreenHeight() - hauteurMenu, couleurEffacer)
+                            else:
+                                return boutons[i].couleur
+
 
 def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
 
