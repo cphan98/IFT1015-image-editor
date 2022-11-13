@@ -181,6 +181,7 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
+    global couleurRectangle
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
@@ -199,7 +200,7 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
                             fillRectangle(0, hauteurMenu, getScreenWidth(
                             ), getScreenHeight() - hauteurMenu, couleurEffacer)
                         else:
-                            global couleurRectangle = boutons[i].couleur
+                            couleurRectangle = boutons[i].couleur
 
 
 def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
