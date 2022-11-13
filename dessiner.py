@@ -72,6 +72,8 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
 
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
+    # dessiner les boutons
+
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
     for i in range(len(couleurs) + 1):
@@ -81,6 +83,8 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
         else:
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
                           taille, taille, couleurs[i - 1])
+
+    # dessiner les bordures de chaque bouton
 
     for j in range(len(couleurs) + 1):
         # bordure supérieure
@@ -95,6 +99,8 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
         # bordure gauche
         for y2 in range(coin1Tab[j].y, coin2Tab[j].y):
             setPixel(coin1Tab[j].x, y2, "#000")
+
+    # dessiner la croix sur le bouton effacer
 
     k = 1
     for _ in range(taille - 2):
@@ -167,9 +173,8 @@ def ajouterRectangle(image, rectangle, couleur):
 
 def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
 
-    # La procédre traiterProchainClic attend le prochain clic de la souris de
-    # l'utilisateur. Cette procédure détermine si le clic a lieu sur un
-    # bouton de couleurs, le bouton effacer, ou dans la fenêtre de dessin.
+    # La procédre détermine si le clic a lieu sur un bouton de couleurs, le
+    # bouton effacer, ou dans la fenêtre de dessin.
 
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
     coin1Tab = coin1Bouton(couleurs, taille, espace)
