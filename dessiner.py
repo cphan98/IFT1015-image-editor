@@ -122,26 +122,19 @@ def trouverBouton(boutons, position):
                     return None
 
 
-def imageOriginaleTab():
-
-    # La fonction imageOriginaleTab crée le tableau de imageOriginale.
-
-    imageOriginaleTab = [None] * getScreenWidth()
-    for i in range(getScreenWidth()):
-        imageOriginaleTab[i] = [None] * getScreenHeight()
-    return imageOriginaleTab
-
-
 def imageOriginale():
 
     # La fonction imageOriginale retourne le tableau des tableaux contenants
     # les textes de couleurs de chaque pixel dans fenêtre de dessin.
 
-    imageOriginale = imageOriginaleTab()
+    imageOriginaleTab = [None] * getScreenWidth()
     for i in range(getScreenWidth()):
-        for j in range(getScreenHeight()):
-            imageOriginale[i][j].append(getPixel(i, j))
-    return imageOriginale
+        imageOriginaleTab[i] = [None] * getScreenHeight()
+
+    for j in range(getScreenWidth()):
+        for k in range(getScreenHeight()):
+            imageOriginaleTab[j][k] = getPixel(j, k)
+    return imageOriginaleTab
 
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
