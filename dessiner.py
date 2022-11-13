@@ -14,6 +14,7 @@ taille = 12                 # taille d'un bouton en px
 espace = 6                  # espace entre et au-dessus de chaque bouton en px
 couleurEffacer = "#fff"     # couleur pour effacer les dessins
 couleurRectangle = "#fff"   # couleur initiale du rectangle à dessiner
+boutons = []                # tableau d'enregistrements des boutons
 
 
 def coin1Bouton(couleurs, taille, espace):
@@ -54,7 +55,7 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
 
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
-    boutons = []
+    global boutons
     i = 0
     for _ in range(len(couleurs) + 1):
         if i == 0:
@@ -172,7 +173,7 @@ def ajouterRectangle(image, rectangle, couleur):
     # sont des enregistrements de coordonnées cartésiennes
 
 
-def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
+def traiterProchainClic(boutons):
 
     # La procédre détermine si le clic a lieu sur un bouton de couleurs, le
     # bouton effacer, ou dans la fenêtre de dessin. Si le clic a lieu sur le
@@ -182,9 +183,8 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
     # flottant est dessiné.
 
     global couleurRectangle
-    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    coin2Tab = coin2Bouton(couleurs, taille, espace)
+    global couleurEffacer
+    global hauteurMenu
     while True:
         souris = getMouse()
         sleep(0.01)
@@ -192,10 +192,10 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
             continue
         else:
             if souris.x > 0 and souris.x < getScreenWidth() and souris.y > hauteurMenu and souris.y < getScreenHeight():
-                struct(x=souris.x, y=souris.y)
+                debut = struct(x=souris.x, y=souris.y)
             else:
                 for i in range(len(boutons)):
-                    if souris.x > coin1Tab[i].x and souris.x < coin2Tab[i].x and souris.y > coin1Tab[i].y and souris.y < coin2Tab[i].y:
+                    if souris.x > boutons[i].coin1.x and souris.x < boutons[i].coin2.x and souris.y > boutons[i].coin1.y and souris.y < boutons[i].coin2.y:
                         if boutons[i].effacer == True:
                             fillRectangle(0, hauteurMenu, getScreenWidth(
                             ), getScreenHeight() - hauteurMenu, couleurEffacer)
