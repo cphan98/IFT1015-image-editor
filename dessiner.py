@@ -211,8 +211,6 @@ def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEff
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
     dessinerBoutons(couleurs, taille, espace, couleurEffacer)
-    dessinerBordure(couleurs, taille, espace)
-    dessinerEffacer(couleurs, taille, espace)
 
 
 def testDessiner():
