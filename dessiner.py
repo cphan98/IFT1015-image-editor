@@ -73,6 +73,7 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
     coin1Tab = coin1Bouton(couleurs, taille, espace)
+    coin2Tab = coin2Bouton(couleurs, taille, espace)
     for i in range(len(couleurs) + 1):
         if i == 0:
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
@@ -81,38 +82,25 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
                           taille, taille, couleurs[i - 1])
 
-
-def dessinerBordure(couleurs, taille, espace):
-
-    # La procédure dessinerBordure dessine les bourdures de chaque bouton.
-
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    coin2Tab = coin2Bouton(couleurs, taille, espace)
-    for i in range(len(couleurs) + 1):
+    for j in range(len(couleurs) + 1):
         # bordure supérieure
-        for x1 in range(coin1Tab[i].x, coin2Tab[i].x):
-            setPixel(x1, coin1Tab[i].y, "#000")
+        for x1 in range(coin1Tab[j].x, coin2Tab[j].x):
+            setPixel(x1, coin1Tab[j].y, "#000")
         # bordure droite
-        for y1 in range(coin1Tab[i].y, coin2Tab[i].y):
-            setPixel(coin2Tab[i].x - 1, y1, "#000")
+        for y1 in range(coin1Tab[j].y, coin2Tab[j].y):
+            setPixel(coin2Tab[j].x - 1, y1, "#000")
         # bordure inférieure
-        for x2 in range(coin1Tab[i].x, coin2Tab[i].x):
-            setPixel(x2, coin2Tab[i].y - 1, "#000")
+        for x2 in range(coin1Tab[j].x, coin2Tab[j].x):
+            setPixel(x2, coin2Tab[j].y - 1, "#000")
         # bordure gauche
-        for y2 in range(coin1Tab[i].y, coin2Tab[i].y):
-            setPixel(coin1Tab[i].x, y2, "#000")
+        for y2 in range(coin1Tab[j].y, coin2Tab[j].y):
+            setPixel(coin1Tab[j].x, y2, "#000")
 
-
-def dessinerEffacer(couleurs, taille, espace):
-
-    # La procédure dessinerEffacer dessine un X rouge dans le bouton effacer.
-
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    i = 1
-    for _ in range(taille - 1):
-        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + i, "#f00")
-        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + taille - 1 - i, "#f00")
-        i += 1
+    k = 1
+    for _ in range(taille - 2):
+        setPixel(coin1Tab[0].x + k, coin1Tab[0].y + k, "#f00")
+        setPixel(coin1Tab[0].x + k, coin1Tab[0].y + taille - 1 - k, "#f00")
+        k += 1
 
 
 def trouverBouton(boutons, position):
