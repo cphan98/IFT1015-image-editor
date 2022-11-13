@@ -177,6 +177,7 @@ def restaurerImage(imageOriginale, rectangle):
     # enregistrement qui contient deux champs (coin1 et coin2). coin1 et
     # coin2 sont aussi des enregistrements qui représentent des coordonnées
     # cartésiennes.
+    
 
 
 def ajouterRectangle(image, rectangle, couleur):
