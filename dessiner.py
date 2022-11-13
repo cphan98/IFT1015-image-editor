@@ -122,7 +122,7 @@ def trouverBouton(boutons, position):
         if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x and position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
             return boutons[i]
         else:
-            return None
+            continue
 
 
 def imageOriginale():
