@@ -7,12 +7,13 @@
 
 # couleurs est un tableaux de textes de couleurs
 couleurs = ["#fff", "#000", "#f00", "#ff0", "#0f0", "#00f", "#f0f"]
-largeur = 180           # largeur de la fenêtre de dessin en px
-hauteur = 120           # hauteur de la fenêtre de dessin en px
-hauteurMenu = 24        # hauteur de la barre de menu
-taille = 12             # taille d'un bouton en px
-espace = 6              # espace entre et au-dessus de chaque bouton en px
-couleurEffacer = "#fff"  # couleur pour effacer les dessins
+largeur = 180               # largeur de la fenêtre de dessin en px
+hauteur = 120               # hauteur de la fenêtre de dessin en px
+hauteurMenu = 24            # hauteur de la barre de menu
+taille = 12                 # taille d'un bouton en px
+espace = 6                  # espace entre et au-dessus de chaque bouton en px
+couleurEffacer = "#fff"     # couleur pour effacer les dessins
+couleurRectangle = "#fff"   # couleur initiale du rectangle à dessiner
 
 
 def coin1Bouton(couleurs, taille, espace):
