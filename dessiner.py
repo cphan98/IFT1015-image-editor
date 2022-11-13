@@ -7,12 +7,13 @@
 
 # couleurs est un tableaux de textes de couleurs
 couleurs = ["#fff", "#000", "#f00", "#ff0", "#0f0", "#00f", "#f0f"]
-largeur = 180           # largeur de la fenêtre de dessin en px
-hauteur = 120           # hauteur de la fenêtre de dessin en px
-hauteurMenu = 24        # hauteur de la barre de menu
-taille = 12             # taille d'un bouton en px
-espace = 6              # espace entre et au-dessus de chaque bouton en px
-couleurEffacer = "#fff"  # couleur pour effacer les dessins
+largeur = 180               # largeur de la fenêtre de dessin en px
+hauteur = 120               # hauteur de la fenêtre de dessin en px
+hauteurMenu = 24            # hauteur de la barre de menu
+taille = 12                 # taille d'un bouton en px
+espace = 6                  # espace entre et au-dessus de chaque bouton en px
+couleurEffacer = "#fff"     # couleur pour effacer les dessins
+couleurRectangle = "#fff"   # couleur initiale du rectangle à dessiner
 
 
 def coin1Bouton(couleurs, taille, espace):
@@ -72,7 +73,10 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
 
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
+    # dessiner les boutons
+
     coin1Tab = coin1Bouton(couleurs, taille, espace)
+    coin2Tab = coin2Bouton(couleurs, taille, espace)
     for i in range(len(couleurs) + 1):
         if i == 0:
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
@@ -81,38 +85,29 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
                           taille, taille, couleurs[i - 1])
 
+    # dessiner les bordures de chaque bouton
 
-def dessinerBordure(couleurs, taille, espace):
-
-    # La procédure dessinerBordure dessine les bourdures de chaque bouton.
-
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    coin2Tab = coin2Bouton(couleurs, taille, espace)
-    for i in range(len(couleurs) + 1):
+    for j in range(len(couleurs) + 1):
         # bordure supérieure
-        for x1 in range(coin1Tab[i].x, coin2Tab[i].x + 1):
-            setPixel(x1, coin1Tab[i].y, "#000")
+        for x1 in range(coin1Tab[j].x, coin2Tab[j].x):
+            setPixel(x1, coin1Tab[j].y, "#000")
         # bordure droite
-        for y1 in range(coin1Tab[i].y, coin2Tab[i].y + 1):
-            setPixel(coin2Tab[i].x, y1, "#000")
+        for y1 in range(coin1Tab[j].y, coin2Tab[j].y):
+            setPixel(coin2Tab[j].x - 1, y1, "#000")
         # bordure inférieure
-        for x2 in range(coin1Tab[i].x, coin2Tab[i].x + 1):
-            setPixel(x2, coin2Tab[i].y, "#000")
+        for x2 in range(coin1Tab[j].x, coin2Tab[j].x):
+            setPixel(x2, coin2Tab[j].y - 1, "#000")
         # bordure gauche
-        for y2 in range(coin1Tab[i].y, coin2Tab[i].y + 1):
-            setPixel(coin1Tab[i].x, y2, "#000")
+        for y2 in range(coin1Tab[j].y, coin2Tab[j].y):
+            setPixel(coin1Tab[j].x, y2, "#000")
 
+    # dessiner la croix sur le bouton effacer
 
-def dessinerEffacer(couleurs, taille, espace):
-
-    # La procédure dessinerEffacer dessine un X rouge dans le bouton effacer.
-
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    i = 1
-    for _ in range(taille-1):
-        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + i, "#f00")
-        setPixel(coin1Tab[0].x + i, coin1Tab[0].y + taille - i, "#f00")
-        i += 1
+    k = 1
+    for _ in range(taille - 2):
+        setPixel(coin1Tab[0].x + k, coin1Tab[0].y + k, "#f00")
+        setPixel(coin1Tab[0].x + k, coin1Tab[0].y + taille - 1 - k, "#f00")
+        k += 1
 
 
 def trouverBouton(boutons, position):
@@ -123,28 +118,11 @@ def trouverBouton(boutons, position):
     # si le point du paramètre position se trouve dans un des carrés formés
     # par les boutons.
 
-    if boutons == []:
-        return None
-    else:
-        for i in range(len(boutons)):
-            if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x:
-                if position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
-                    return boutons[i]
-                else:
-                    return None
-
-
-def imageOriginaleTab(largeur, hauteur):
-
-    # La fonction imageOriginaleTab crée le tableau de imageOriginale.
-
-    imageOriginaleTab = [None] * largeur
-    if largeur == 0:
-        return None
-    else:
-        for i in range(largeur):
-            imageOriginaleTab[i] = [None] * hauteur
-        return imageOriginaleTab
+    for i in range(len(boutons)):
+        if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x and position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
+            return boutons[i]
+        else:
+            continue
 
 
 def imageOriginale():
@@ -152,11 +130,44 @@ def imageOriginale():
     # La fonction imageOriginale retourne le tableau des tableaux contenants
     # les textes de couleurs de chaque pixel dans fenêtre de dessin.
 
-    imageOriginale = imageOriginaleTab(getScreenWidth(), getScreenHeight())
+    imageOriginaleTab = [None] * getScreenWidth()
     for i in range(getScreenWidth()):
-        for j in range(getScreenHeight()):
-            imageOriginale[i][j].append(getPixel(i, j))
-    return imageOriginale
+        imageOriginaleTab[i] = [None] * getScreenHeight()
+
+    for j in range(getScreenWidth()):
+        for k in range(getScreenHeight()):
+            imageOriginaleTab[j][k] = getPixel(j, k)
+    return imageOriginaleTab
+
+
+def dessinerRectangle(debut, couleurRectangle):
+
+    # La procédure dessinerRectangle dessine un rectangle dans le fenêtre de
+    # dessin tant que le bouton principal de la souris reste appuyé avec la
+    # couleur sélectionnée.
+
+    global hauteurMenu
+
+    repeter = True
+    while repeter:
+        souris = getMouse()
+        sleep(0.01)
+        if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
+            fin = struct(x=souris.x, y=souris.y)
+            if fin.x < debut.x and fin.y > debut.y:
+                hauteur = max(debut.y, fin.y) + 1 - min(debut.y, fin.y)
+                fillRectangle(debut.x, debut.y, 1, hauteur, couleurRectangle)
+            elif fin.x > debut.x and fin.y < debut.y:
+                largeur = max(debut.x, fin.x) + 1 - min(debut.x, fin.x)
+                fillRectangle(debut.x, debut.y, largeur, 1, couleurRectangle)
+            elif fin.x < debut.x and fin.y < debut.y:
+                fillRectangle(debut.x, debut.y, 1, 1, couleurRectangle)
+            else:
+                largeur = max(debut.x, fin.x) + 1 - min(debut.x, fin.x)
+                hauteur = max(debut.y, fin.y) + 1 - min(debut.y, fin.y)
+                fillRectangle(debut.x, debut.y, largeur,
+                              hauteur, couleurRectangle)
+        repeter = souris.button == 1
 
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
@@ -188,46 +199,58 @@ def ajouterRectangle(image, rectangle, couleur):
     # sont des enregistrements de coordonnées cartésiennes
 
 
-def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
+def traiterProchainClic(boutons):
 
-    # La procédre traiterProchainClic attend le prochain clic de la souris de
-    # l'utilisateur. Cette procédure détermine si le clic a lieu sur un
-    # bouton de couleurs, le bouton effacer, ou dans la fenêtre de dessin.
+    # La procédre détermine si le clic a lieu sur un bouton de couleurs, le
+    # bouton effacer, ou dans la fenêtre de dessin. Si le clic a lieu sur le
+    # bouton effacer, alors le dessin est effacé. Si le clic a lieu sur un
+    # des boutons de couleurs, la couleur du prochain rectangle dessiné est
+    # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
+    # flottant est dessiné.
 
-    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    coin2Tab = coin2Bouton(couleurs, taille, espace)
+    global hauteurMenu
+    global couleurRectangle
+
     while True:
-        getMouse()
+        souris = getMouse()
         sleep(0.01)
-        if getMouse().button == 0 or getMouse().button == 2:
+        position = struct(x=souris.x, y=souris.y)
+        if souris.button == 0 or souris.button == 2:
             continue
         else:
-            if getMouse().x > 0 and getMouse().x < getScreenWidth():
-                if getMouse().y > hauteurMenu and getMouse().y < getScreenHeight():
-                    return struct(x=getMouse().x, y=getMouse().y)
+            if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
+                debut = position
+                dessinerRectangle(debut, couleurRectangle)
             else:
-                for i in range(len(boutons)):
-                    if getMouse().x > coin1Tab[i].x and getMouse().x < coin2Tab[i].x:
-                        if getMouse().y > coin1Tab[i].y and getMouse().y < coin2Tab[i].y:
-                            if boutons[i].effacer == True:
-                                fillRectangle(0, hauteurMenu, getScreenWidth(
-                                ), getScreenHeight() - hauteurMenu, couleurEffacer)
-                            else:
-                                return boutons[i].couleur
+                bouton = trouverBouton(boutons, position)
+                if bouton == None:
+                    continue
+                elif bouton.effacer == True:
+                    fillRectangle(0, hauteurMenu, getScreenWidth(
+                    ), getScreenHeight() - hauteurMenu, bouton.couleur)
+                else:
+                    couleurRectangle = bouton.couleur
 
 
-def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
+def dessiner():
 
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
+    global largeur
+    global hauteur
+    global hauteurMenu
+    global couleurs
+    global taille
+    global espace
+    global couleurEffacer
 
     setScreenMode(largeur, hauteur)
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
     dessinerBoutons(couleurs, taille, espace, couleurEffacer)
-    dessinerBordure(couleurs, taille, espace)
-    dessinerEffacer(couleurs, taille, espace)
+
+    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
+    traiterProchainClic(boutons)
 
 
 def testDessiner():
@@ -236,16 +259,18 @@ def testDessiner():
 
     # tests pour coin1
 
-    assert coin1([], 12, 6) == [struct(x=6, y=6)]
-    assert coin1(["#fff"], 12, 6) == [struct(x=6, y=6), struct(x=24, y=6)]
-    assert coin1(["#fff", "#000"], 12, 6) == [struct(
+    assert coin1Bouton([], 12, 6) == [struct(x=6, y=6)]
+    assert coin1Bouton(["#fff"], 12, 6) == [
+        struct(x=6, y=6), struct(x=24, y=6)]
+    assert coin1Bouton(["#fff", "#000"], 12, 6) == [struct(
         x=6, y=6), struct(x=24, y=6), struct(x=42, y=6)]
 
     # tests pour coin2
 
-    assert coin2([], 12, 6) == [struct(x=18, y=18)]
-    assert coin2(["#fff"], 12, 6) == [struct(x=18, y=18), struct(x=36, y=18)]
-    assert coin2(["#fff", "#000"], 12, 6) == [struct(
+    assert coin2Bouton([], 12, 6) == [struct(x=18, y=18)]
+    assert coin2Bouton(["#fff"], 12, 6) == [
+        struct(x=18, y=18), struct(x=36, y=18)]
+    assert coin2Bouton(["#fff", "#000"], 12, 6) == [struct(
         x=18, y=18), struct(x=36, y=18), struct(x=54, y=18)]
 
     # tests pour creerBoutons
@@ -281,15 +306,9 @@ def testDessiner():
     assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
         x=12, y=3)) == None
 
-    # tests pour imageOriginaleTab
+    # tests pour restaurerImage
 
-    assert imageOriginaleTab(0, 10) == None
-    assert imageOriginaleTab(1, 0) == [[]]
-    assert imageOriginaleTab(3, 0) == [[], [], []]
-    assert imageOriginaleTab(1, 1) == [[None]]
-    assert imageOriginaleTab(1, 3) == [[None, None, None]]
-    assert imageOriginaleTab(3, 1) == [[None], [None], [None]]
-    assert imageOriginaleTab(2, 2) == [[None, None], [None, None]]
+    # tests pour ajouterRectangle
 
 
 testDessiner()
