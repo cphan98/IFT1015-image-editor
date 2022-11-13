@@ -14,7 +14,6 @@ taille = 12                 # taille d'un bouton en px
 espace = 6                  # espace entre et au-dessus de chaque bouton en px
 couleurEffacer = "#fff"     # couleur pour effacer les dessins
 couleurRectangle = "#fff"   # couleur initiale du rectangle à dessiner
-boutons = []                # tableau d'enregistrements des boutons
 
 
 def coin1Bouton(couleurs, taille, espace):
@@ -55,7 +54,7 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
 
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
-    global boutons
+    boutons = []
     i = 0
     for _ in range(len(couleurs) + 1):
         if i == 0:
@@ -119,15 +118,11 @@ def trouverBouton(boutons, position):
     # si le point du paramètre position se trouve dans un des carrés formés
     # par les boutons.
 
-    if boutons == []:
-        return None
-    else:
-        for i in range(len(boutons)):
-            if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x:
-                if position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
-                    return boutons[i]
-                else:
-                    return None
+    for i in range(len(boutons)):
+        if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x and position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
+            return boutons[i]
+        else:
+            return None
 
 
 def imageOriginale():
@@ -226,16 +221,18 @@ def testDessiner():
 
     # tests pour coin1
 
-    assert coin1([], 12, 6) == [struct(x=6, y=6)]
-    assert coin1(["#fff"], 12, 6) == [struct(x=6, y=6), struct(x=24, y=6)]
-    assert coin1(["#fff", "#000"], 12, 6) == [struct(
+    assert coin1Bouton([], 12, 6) == [struct(x=6, y=6)]
+    assert coin1Bouton(["#fff"], 12, 6) == [
+        struct(x=6, y=6), struct(x=24, y=6)]
+    assert coin1Bouton(["#fff", "#000"], 12, 6) == [struct(
         x=6, y=6), struct(x=24, y=6), struct(x=42, y=6)]
 
     # tests pour coin2
 
-    assert coin2([], 12, 6) == [struct(x=18, y=18)]
-    assert coin2(["#fff"], 12, 6) == [struct(x=18, y=18), struct(x=36, y=18)]
-    assert coin2(["#fff", "#000"], 12, 6) == [struct(
+    assert coin2Bouton([], 12, 6) == [struct(x=18, y=18)]
+    assert coin2Bouton(["#fff"], 12, 6) == [
+        struct(x=18, y=18), struct(x=36, y=18)]
+    assert coin2Bouton(["#fff", "#000"], 12, 6) == [struct(
         x=18, y=18), struct(x=36, y=18), struct(x=54, y=18)]
 
     # tests pour creerBoutons
