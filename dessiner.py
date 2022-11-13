@@ -177,29 +177,25 @@ def traiterProchainClic(boutons):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
-    global couleurs
-    global taille
-    global espace
     global hauteurMenu
-    global couleurEffacer
     global couleurRectangle
 
     while True:
         souris = getMouse()
         sleep(0.01)
+        position = struct(x=souris.x, y=souris.y)
         if souris.button == 0 or souris.button == 2:
             continue
         else:
-            if souris.x > 0 and souris.x < getScreenWidth() and souris.y > hauteurMenu and souris.y < getScreenHeight():
-                debut = struct(x=souris.x, y=souris.y)
+            if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
+                debut = position
             else:
-                for i in range(len(boutons)):
-                    if souris.x > boutons[i].coin1.x and souris.x < boutons[i].coin2.x and souris.y > boutons[i].coin1.y and souris.y < boutons[i].coin2.y:
-                        if boutons[i].effacer == True:
-                            fillRectangle(0, hauteurMenu, getScreenWidth(
-                            ), getScreenHeight() - hauteurMenu, couleurEffacer)
-                        else:
-                            couleurRectangle = boutons[i].couleur
+                trouverBouton = trouverBouton(boutons, position)
+                if trouverBouton.effacer == True:
+                    fillRectangle(0, hauteurMenu, getScreenWidth(
+                    ), getScreenHeight() - hauteurMenu, trouverBouton.couleur)
+                else:
+                    couleurRectangle = trouverBouton.couleur
 
 
 def dessiner():
