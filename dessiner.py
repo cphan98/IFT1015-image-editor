@@ -213,12 +213,14 @@ def traiterProchainClic(boutons):
                 debut = position
                 dessinerRectangle(debut, couleurRectangle)
             else:
-                trouverBouton = trouverBouton(boutons, position)
-                if trouverBouton.effacer == True:
+                bouton = trouverBouton(boutons, position)
+                if bouton == None:
+                    continue
+                elif bouton.effacer == True:
                     fillRectangle(0, hauteurMenu, getScreenWidth(
-                    ), getScreenHeight() - hauteurMenu, trouverBouton.couleur)
+                    ), getScreenHeight() - hauteurMenu, bouton.couleur)
                 else:
-                    couleurRectangle = trouverBouton.couleur
+                    couleurRectangle = bouton.couleur
 
 
 def dessiner():
