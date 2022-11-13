@@ -174,7 +174,11 @@ def ajouterRectangle(image, rectangle, couleur):
 def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
 
     # La procédre détermine si le clic a lieu sur un bouton de couleurs, le
-    # bouton effacer, ou dans la fenêtre de dessin.
+    # bouton effacer, ou dans la fenêtre de dessin. Si le clic a lieu sur le
+    # bouton effacer, alors le dessin est effacé. Si le clic a lieu sur un
+    # des boutons de couleurs, la couleur du prochain rectangle dessiné est
+    # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
+    # flottant est dessiné.
 
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
     coin1Tab = coin1Bouton(couleurs, taille, espace)
