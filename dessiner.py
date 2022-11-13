@@ -122,16 +122,16 @@ def trouverBouton(boutons, position):
                     return None
 
 
-def imageOriginaleTab(largeur, hauteur):
+def imageOriginaleTab():
 
     # La fonction imageOriginaleTab crée le tableau de imageOriginale.
 
-    imageOriginaleTab = [None] * largeur
-    if largeur == 0:
+    imageOriginaleTab = [None] * getScreenWidth()
+    if getScreenWidth() == 0:
         return None
     else:
-        for i in range(largeur):
-            imageOriginaleTab[i] = [None] * hauteur
+        for i in range(getScreenWidth()):
+            imageOriginaleTab[i] = [None] * getScreenHeight()
         return imageOriginaleTab
 
 
@@ -140,7 +140,7 @@ def imageOriginale():
     # La fonction imageOriginale retourne le tableau des tableaux contenants
     # les textes de couleurs de chaque pixel dans fenêtre de dessin.
 
-    imageOriginale = imageOriginaleTab(getScreenWidth(), getScreenHeight())
+    imageOriginale = imageOriginaleTab()
     for i in range(getScreenWidth()):
         for j in range(getScreenHeight()):
             imageOriginale[i][j].append(getPixel(i, j))
@@ -265,16 +265,6 @@ def testDessiner():
         x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=21, y=12)) == None
     assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
         x=12, y=3)) == None
-
-    # tests pour imageOriginaleTab
-
-    assert imageOriginaleTab(0, 10) == None
-    assert imageOriginaleTab(1, 0) == [[]]
-    assert imageOriginaleTab(3, 0) == [[], [], []]
-    assert imageOriginaleTab(1, 1) == [[None]]
-    assert imageOriginaleTab(1, 3) == [[None, None, None]]
-    assert imageOriginaleTab(3, 1) == [[None], [None], [None]]
-    assert imageOriginaleTab(2, 2) == [[None, None], [None, None]]
 
 
 testDessiner()
