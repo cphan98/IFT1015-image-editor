@@ -152,13 +152,11 @@ def dessinerRectangle(debut, couleurRectangle):
     while repeter:
         souris = getMouse()
         sleep(0.01)
-        if souris.x > 0 and souris.x < getScreenWidth() and souris.y > hauteurMenu and souris.y < getScreenHeight():
+        if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
             fin = struct(x=souris.x, y=souris.y)
             largeur = max(debut.x, fin.x) + 1 - min(debut.x, fin.x)
             hauteur = max(debut.y, fin.y) + 1 - min(debut.y, fin.y)
             fillRectangle(debut.x, debut.y, largeur, hauteur, couleurRectangle)
-        else:
-            continue
         repeter = souris.button == 1
 
 
