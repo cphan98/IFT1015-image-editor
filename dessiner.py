@@ -90,16 +90,16 @@ def dessinerBordure(couleurs, taille, espace):
     coin2Tab = coin2Bouton(couleurs, taille, espace)
     for i in range(len(couleurs) + 1):
         # bordure supérieure
-        for x1 in range(coin1Tab[i].x, coin2Tab[i].x + 1):
+        for x1 in range(coin1Tab[i].x, coin2Tab[i].x):
             setPixel(x1, coin1Tab[i].y, "#000")
         # bordure droite
-        for y1 in range(coin1Tab[i].y, coin2Tab[i].y + 1):
-            setPixel(coin2Tab[i].x, y1, "#000")
+        for y1 in range(coin1Tab[i].y, coin2Tab[i].y):
+            setPixel(coin2Tab[i].x - 1, y1, "#000")
         # bordure inférieure
-        for x2 in range(coin1Tab[i].x, coin2Tab[i].x + 1):
-            setPixel(x2, coin2Tab[i].y, "#000")
+        for x2 in range(coin1Tab[i].x, coin2Tab[i].x):
+            setPixel(x2, coin2Tab[i].y - 1, "#000")
         # bordure gauche
-        for y2 in range(coin1Tab[i].y, coin2Tab[i].y + 1):
+        for y2 in range(coin1Tab[i].y, coin2Tab[i].y):
             setPixel(coin1Tab[i].x, y2, "#000")
 
 
