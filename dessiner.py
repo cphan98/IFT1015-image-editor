@@ -264,5 +264,9 @@ def testDessiner():
     assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
         x=12, y=3)) == None
 
+    # tests pour restaurerImage
+
+    # tests pour ajouterRectangle
+
 
 testDessiner()
