@@ -159,23 +159,6 @@ def imageOriginale():
     return imageOriginale
 
 
-def debut(hauteurMenu):
-
-    # La fonction debut retourne un enregistrement des coordonnées
-    # cartésiennes du premier clic dans la section pour dessiner.
-
-    while True:
-        getMouse()
-        sleep(0.01)
-        if getMouse().button == 0 or getMouse().button == 2:
-            continue
-        else:
-            souris = getMouse()
-            if souris.x > 0 and souris.x < getScreenWidth():
-                if souris.y > hauteurMenu and souris.y < getScreenHeight():
-                    return struct(x=souris.x, y=souris.y)
-
-
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
