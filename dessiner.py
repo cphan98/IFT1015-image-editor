@@ -127,12 +127,9 @@ def imageOriginaleTab():
     # La fonction imageOriginaleTab crée le tableau de imageOriginale.
 
     imageOriginaleTab = [None] * getScreenWidth()
-    if getScreenWidth() == 0:
-        return None
-    else:
-        for i in range(getScreenWidth()):
-            imageOriginaleTab[i] = [None] * getScreenHeight()
-        return imageOriginaleTab
+    for i in range(getScreenWidth()):
+        imageOriginaleTab[i] = [None] * getScreenHeight()
+    return imageOriginaleTab
 
 
 def imageOriginale():
