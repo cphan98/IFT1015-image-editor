@@ -1,5 +1,5 @@
 # Hoang-Thi-Thi Cynthia Phan 20220019
-#
+# Vincent Hoang 20183549
 
 # Le code ci-dessous programme un éditeur d'image. L'éditeur d'image permet
 # à l'utilisateur de dessiner des rectangles de couleurs et de dimensions
@@ -31,7 +31,7 @@ def coin1(couleurs, taille, espace):
 
 def coin2(couleurs, taille, espace):
 
-    # La fonction coin2 retourne un tab;eau d'enregistrement des coordonnées du
+    # La fonction coin2 retourne un tableau d'enregistrement des coordonnées du
     # coin inférieur droit de chaque bouton de la barre menu.
 
     coin2Tab = []   # tableau d'enregistrements des coordonnées du coin inférieur droit de chaque bouton
@@ -183,7 +183,7 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
     # couleurs, debut, un enregistrement qui contient les coordonées
     # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
     # la couleur du rectangle.
-
+    
 
 def restaurerImage(imageOriginale, rectangle):
 
@@ -209,6 +209,17 @@ def traiterProchainClic(boutons):
     # l'utilisateur. Cette procédure détermine si le clic a lieu sur un
     # bouton de couleurs, le bouton effacer, ou dans la fenêtre de dessin.
 
+    while True:
+        getMouse()
+        sleep(0.01)
+        for i in range(len(boutons)):
+            if (getMouse().x < coin1Tab[i].x and x > coin2Tab[i].x):
+                return False
+            if (getMouse().y < coinTab1[i].y and y > coin2Tab[i].y):
+                return False
+            else:
+                return True
+        i+=1
 
 def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
 
