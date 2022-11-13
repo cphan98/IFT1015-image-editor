@@ -184,8 +184,6 @@ def traiterProchainClic(boutons):
     global couleurEffacer
     global couleurRectangle
 
-    creerBoutons(couleurs, taille, espace, couleurEffacer)
-
     while True:
         souris = getMouse()
         sleep(0.01)
