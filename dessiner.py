@@ -210,8 +210,8 @@ def traiterProchainClic(couleurs, taille, espace, couleurEffacer, hauteurMenu):
                     if getMouse().x > coin1Tab[i].x and getMouse().x < coin2Tab[i].x:
                         if getMouse().y > coin1Tab[i].y and getMouse().y < coin2Tab[i].y:
                             if boutons[i].effacer == True:
-                            fillRectangle(0, hauteurMenu, getScreenWidth(
-                            ), getScreenHeight() - hauteurMenu, couleurEffacer)
+                                fillRectangle(0, hauteurMenu, getScreenWidth(
+                                ), getScreenHeight() - hauteurMenu, couleurEffacer)
                             else:
                                 return boutons[i].couleur
 
