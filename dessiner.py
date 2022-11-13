@@ -213,14 +213,17 @@ def traiterProchainClic(boutons):
     while True:
         getMouse()
         sleep(0.01)
-        for i in range(len(boutons)):
-            if (getMouse().x < coin1Tab[i].x and x > coin2Tab[i].x):
-                return False
-            if (getMouse().y < coinTab1[i].y and y > coin2Tab[i].y):
-                return False
-            else:
-                return True
-        i+=1
+        if getMouse().button == 0 or getMouse().button == 2:
+            continue
+        else:
+            for i in range(len(boutons)):
+                if (getMouse().x < coin1Tab[i].x and x > coin2Tab[i].x):
+                    return False
+                if (getMouse().y < coin1Tab1[i].y and y > coin2Tab[i].y):
+                    return False
+                else:
+                    return True
+            i+=1
 
 def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
 
