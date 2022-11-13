@@ -140,6 +140,28 @@ def imageOriginale():
     return imageOriginaleTab
 
 
+def dessinerRectangle(debut, couleurRectangle):
+
+    # La procédure dessinerRectangle dessine un rectangle dans le fenêtre de
+    # dessin tant que le bouton principal de la souris reste appuyé avec la
+    # couleur sélectionnée.
+
+    global hauteurMenu
+
+    repeter = True
+    while repeter:
+        souris = getMouse()
+        sleep(0.01)
+        if souris.x > 0 and souris.x < getScreenWidth() and souris.y > hauteurMenu and souris.y < getScreenHeight():
+            fin = struct(x=souris.x, y=souris.y)
+            largeur = max(debut.x, fin.x) + 1 - min(debut.x, fin.x)
+            hauteur = max(debut.y, fin.y) + 1 - min(debut.y, fin.y)
+            fillRectangle(debut.x, debut.y, largeur, hauteur, couleurRectangle)
+        else:
+            continue
+        repeter = souris.button == 1
+
+
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
@@ -189,6 +211,7 @@ def traiterProchainClic(boutons):
         else:
             if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
                 debut = position
+                dessinerRectangle(debut, couleurRectangle)
             else:
                 trouverBouton = trouverBouton(boutons, position)
                 if trouverBouton.effacer == True:
