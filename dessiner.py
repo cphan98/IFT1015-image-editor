@@ -202,15 +202,25 @@ def traiterProchainClic(boutons):
                             couleurRectangle = boutons[i].couleur
 
 
-def dessiner(largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer):
+def dessiner():
 
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
+    global largeur
+    global hauteur
+    global hauteurMenu
+    global couleurs
+    global taille
+    global espace
+    global couleurEffacer
 
     setScreenMode(largeur, hauteur)
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
     dessinerBoutons(couleurs, taille, espace, couleurEffacer)
+
+    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
+    traiterProchainClic(boutons)
 
 
 def testDessiner():
