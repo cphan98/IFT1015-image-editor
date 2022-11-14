@@ -180,6 +180,10 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
     # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
     # la couleur du rectangle.
 
+    global couleurRectangle
+
+    dessinerRectangle(debut, couleurRectangle)
+
 
 def restaurerImage(imageOriginale, rectangle):
 
