@@ -69,23 +69,9 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
     return boutons
 
 
-def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
+def dessinerBordures(couleurs):
 
-    # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
-
-    # dessiner les boutons
-
-    coin1Tab = coin1Bouton(couleurs, taille, espace)
-    coin2Tab = coin2Bouton(couleurs, taille, espace)
-    for i in range(len(couleurs) + 1):
-        if i == 0:
-            fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
-                          taille, taille, couleurEffacer)
-        else:
-            fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
-                          taille, taille, couleurs[i - 1])
-
-    # dessiner les bordures de chaque bouton
+    # La procédure dessinerBordure dessine les bordures de chaque bouton.
 
     for j in range(len(couleurs) + 1):
         # bordure supérieure
@@ -101,13 +87,42 @@ def dessinerBoutons(couleurs, taille, espace, couleurEffacer):
         for y2 in range(coin1Tab[j].y, coin2Tab[j].y):
             setPixel(coin1Tab[j].x, y2, "#000")
 
-    # dessiner la croix sur le bouton effacer
 
-    k = 1
+def dessinerEffacer(taille):
+
+    # La procédure dessinerEffacer dessine la crois rouge dans le bouton
+    # effacer.
+
+     k = 1
     for _ in range(taille - 2):
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + k, "#f00")
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + taille - 1 - k, "#f00")
         k += 1
+
+
+def dessinerBoutons():
+
+    # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
+
+    global couleurs
+    global taille
+    global espace
+    global couleurEffacer
+
+    # dessiner les boutons
+
+    coin1Tab = coin1Bouton(couleurs, taille, espace)
+    coin2Tab = coin2Bouton(couleurs, taille, espace)
+    for i in range(len(couleurs) + 1):
+        if i == 0:
+            fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
+                          taille, taille, couleurEffacer)
+        else:
+            fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
+                          taille, taille, couleurs[i - 1])
+
+    dessinerBordures(couleurs, coin1Tab, coin1Tab)
+    dessinerEffacer(taille, coin1Tab)
 
 
 def trouverBouton(boutons, position):
@@ -246,10 +261,10 @@ def dessiner():
     setScreenMode(largeur, hauteur)
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
-    dessinerBoutons(couleurs, taille, espace, couleurEffacer)
+    dessinerBoutons()
 
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
-    traiterProchainClic(boutons)
+    # traiterProchainClic(boutons)
 
 
 def testDessiner():
