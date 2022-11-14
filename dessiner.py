@@ -69,7 +69,7 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
     return boutons
 
 
-def dessinerBordures(couleurs):
+def dessinerBordures(couleurs, coin1Tab, coin2Tab):
 
     # La procédure dessinerBordure dessine les bordures de chaque bouton.
 
@@ -93,7 +93,7 @@ def dessinerEffacer(taille):
     # La procédure dessinerEffacer dessine la crois rouge dans le bouton
     # effacer.
 
-     k = 1
+    k = 1
     for _ in range(taille - 2):
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + k, "#f00")
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + taille - 1 - k, "#f00")
@@ -168,7 +168,8 @@ def dessinerRectangle(debut, couleurRectangle):
         coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
         coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
 
-        fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x, coin2.y - coin1.y, couleurRectangle)
+        fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
+                      coin2.y - coin1.y, couleurRectangle)
 
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
