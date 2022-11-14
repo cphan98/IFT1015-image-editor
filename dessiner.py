@@ -160,7 +160,7 @@ def dessinerRectangle(debut, couleurRectangle):
             elif fin.x > debut.x and fin.y < debut.y:
                 largeur = max(debut.x, fin.x) + 1 - min(debut.x, fin.x)
                 fillRectangle(debut.x, debut.y, largeur, 1, couleurRectangle)
-            elif fin.x < debut.x and fin.y < debut.y:
+            elif fin.x < debut.x and (fin.y < debut.y or fin.y == debut.y):
                 fillRectangle(debut.x, debut.y, 1, 1, couleurRectangle)
             else:
                 largeur = max(debut.x, fin.x) + 1 - min(debut.x, fin.x)
