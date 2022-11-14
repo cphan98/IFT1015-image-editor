@@ -121,7 +121,7 @@ def dessinerBoutons():
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
                           taille, taille, couleurs[i - 1])
 
-    dessinerBordures(couleurs, coin1Tab, coin1Tab)
+    dessinerBordures(couleurs, coin1Tab, coin2Tab)
     dessinerEffacer(taille, coin1Tab)
 
 
