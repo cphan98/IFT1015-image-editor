@@ -161,15 +161,16 @@ def dessinerRectangle(debut, couleurRectangle):
     # dessin tant que le bouton principal de la souris reste appuyé avec la
     # couleur sélectionnée.
 
+    global hauteurMenu
+
     while getMouse().button == 1:
         souris = getMouse()
         sleep(0.01)
-
-        coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
-        coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
-
-        fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
-                      coin2.y - coin1.y, couleurRectangle)
+        if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
+            coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
+            coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
+            fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
+                          coin2.y - coin1.y, couleurRectangle)
 
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
@@ -194,6 +195,10 @@ def restaurerImage(imageOriginale, rectangle):
     # enregistrement qui contient deux champs (coin1 et coin2). coin1 et
     # coin2 sont aussi des enregistrements qui représentent des coordonnées
     # cartésiennes.
+
+    for i in range(rectangle.coin1.x, rectangle.coin2.x + 1):
+        for j in range(rectangle.coin1.y, rectangle.coin2.y + 1):
+            setPixel(i, j, imageOriginale[i][j])
 
 
 def ajouterRectangle(image, rectangle, couleur):
