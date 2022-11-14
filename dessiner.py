@@ -88,7 +88,7 @@ def dessinerBordures(couleurs, coin1Tab, coin2Tab):
             setPixel(coin1Tab[j].x, y2, "#000")
 
 
-def dessinerEffacer(taille):
+def dessinerEffacer(taille, coin1Tab):
 
     # La procédure dessinerEffacer dessine la crois rouge dans le bouton
     # effacer.
