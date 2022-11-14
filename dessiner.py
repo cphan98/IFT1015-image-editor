@@ -224,7 +224,7 @@ def traiterProchainClic(boutons):
         else:
             if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
                 debut = position
-                dessinerRectangle(debut, couleurRectangle)
+                dessinerRectangleFlottant(imageOriginale, debut, couleur)
             else:
                 bouton = trouverBouton(boutons, position)
                 if bouton == None:
