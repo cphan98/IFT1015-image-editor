@@ -152,16 +152,13 @@ def imageOriginale():
     return imageOriginaleTab
 
 
-def dessinerRectangleFlottant(imageOriginale, debut, couleur):
+def dessinerRectangle(debut, couleurRectangle):
 
-    # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
-    # que le bouton de la souris de l'utilisateur reste enfoncé. Elle prend
-    # comme paramètre imageOriginal, un tableau de tableaux de textes de
-    # couleurs, debut, un enregistrement qui contient les coordonées
-    # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
-    # la couleur du rectangle.
+    # La procédure dessinerRectangle dessine un rectangle dans le fenêtre de
+    # dessin tant que le bouton principal de la souris reste appuyé avec la
+    # couleur sélectionnée.
 
-    global hauteurMenu, couleurRectangle
+    global hauteurMenu
 
     while getMouse().button == 1:
         souris = getMouse()
@@ -173,6 +170,32 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
                           coin2.y - coin1.y, couleurRectangle)
 
 
+def dessinerRectangleFlottant(imageOriginale, debut, couleur):
+
+    # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
+    # que le bouton de la souris de l'utilisateur reste enfoncé. Elle prend
+    # comme paramètre imageOriginal, un tableau de tableaux de textes de
+    # couleurs, debut, un enregistrement qui contient les coordonées
+    # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
+    # la couleur du rectangle.
+
+    while getMouse().button == 1:
+        souris = getMouse()
+        sleep(0.01)
+
+        coin1 = struct(x=min(debut.x,souris.x),
+                        y=min(debut.y,souris.y))
+        coin2 = struct(x=max(debut.x,souris.x)+1,
+                        y=max(debut.y,souris.y)+1)
+
+        restaurerImage(imageOriginale, struct(coin1=struct(x=debut.x, y=debut.y),
+                                            coin2=struct(x=souris.x, y=souris.y)))        
+        
+        fillRectangle(coin1.x, coin1.y, coin2.x-coin1.x, coin2.y-coin1.y, couleur)
+
+
+
+
 def restaurerImage(imageOriginale, rectangle):
 
     # La procédure restaurerImage dessine une section rectangulaire de l'image
@@ -182,7 +205,6 @@ def restaurerImage(imageOriginale, rectangle):
     # coin2 sont aussi des enregistrements qui représentent des coordonnées
     # cartésiennes.
     
-
     for i in range(rectangle.coin1.x, rectangle.coin2.x + 1):
         for j in range(rectangle.coin1.y, rectangle.coin2.y + 1):
             setPixel(i, j, imageOriginale[i][j])
@@ -197,8 +219,7 @@ def ajouterRectangle(image, rectangle, couleur):
 
     for i in range(rectangle.coin1.x, rectangle.coin2.x+1):
         for j in range(rectangle.coin1.y, rectangle.coin2.y+1):
-            image[i][j] = couleur
-
+            image[j][i] = couleur
 
 def traiterProchainClic(boutons):
 
@@ -209,7 +230,8 @@ def traiterProchainClic(boutons):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
-    global hauteurMenu, couleurRectangle
+    global hauteurMenu
+    global couleurRectangle
 
     while True:
         souris = getMouse()
@@ -238,7 +260,7 @@ def dessiner():
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
     global largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer
-
+  
     setScreenMode(largeur, hauteur)
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
@@ -246,6 +268,7 @@ def dessiner():
 
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
     traiterProchainClic(boutons)
+
 
 def testDessiner():
 
