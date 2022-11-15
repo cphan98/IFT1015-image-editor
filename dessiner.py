@@ -218,19 +218,20 @@ def traiterProchainClic(boutons):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
-    global hauteurMenu
-    global couleurRectangle
+    global hauteurMenu, couleurRectangle
 
     while True:
         souris = getMouse()
         sleep(0.01)
         position = struct(x=souris.x, y=souris.y)
+
         if souris.button == 0 or souris.button == 2:
             continue
         else:
             if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
                 debut = position
                 couleur = couleurRectangle
+                imageOriginale = imageOriginaleTab()
                 dessinerRectangleFlottant(imageOriginale, debut, couleur)
             else:
                 bouton = trouverBouton(boutons, position)
