@@ -24,6 +24,7 @@ def coin1Bouton(couleurs, taille, espace):
 
     coin1Tab = []   # tableau d'enregistrements  des coordonnées du coin supérieur gauche de chaque bouton
     i = 1
+
     for _ in range(len(couleurs) + 1):
         x = i * espace + (i - 1) * taille
         coin1Tab.append(struct(x=x, y=espace))
@@ -39,6 +40,7 @@ def coin2Bouton(couleurs, taille, espace):
     coin2Tab = []   # tableau d'enregistrements des coordonnées du coin inférieur droit de chaque bouton
     y = espace + taille
     i = 1
+
     for _ in range(len(couleurs) + 1):
         x = i * (espace + taille)
         coin2Tab.append(struct(x=x, y=y))
@@ -56,6 +58,7 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
     coin2Tab = coin2Bouton(couleurs, taille, espace)
     boutons = []
     i = 0
+
     for _ in range(len(couleurs) + 1):
         if i == 0:
             effacer = True
@@ -77,12 +80,15 @@ def dessinerBordures(couleurs, coin1Tab, coin2Tab):
         # bordure supérieure
         for x1 in range(coin1Tab[j].x, coin2Tab[j].x):
             setPixel(x1, coin1Tab[j].y, "#000")
+
         # bordure droite
         for y1 in range(coin1Tab[j].y, coin2Tab[j].y):
             setPixel(coin2Tab[j].x - 1, y1, "#000")
+
         # bordure inférieure
         for x2 in range(coin1Tab[j].x, coin2Tab[j].x):
             setPixel(x2, coin2Tab[j].y - 1, "#000")
+
         # bordure gauche
         for y2 in range(coin1Tab[j].y, coin2Tab[j].y):
             setPixel(coin1Tab[j].x, y2, "#000")
@@ -94,6 +100,7 @@ def dessinerEffacer(taille, coin1Tab):
     # effacer.
 
     k = 1
+
     for _ in range(taille - 2):
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + k, "#f00")
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + taille - 1 - k, "#f00")
@@ -105,11 +112,9 @@ def dessinerBoutons():
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
     global couleurs, taille, espace, couleurEffacer
-
-    # dessiner les boutons
-
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
+
     for i in range(len(couleurs) + 1):
         if i == 0:
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
@@ -137,12 +142,13 @@ def trouverBouton(boutons, position):
             continue
 
 
-def imageOriginale():
+def imageOriginaleTab():
 
     # La fonction imageOriginale retourne le tableau des tableaux contenants
     # les textes de couleurs de chaque pixel dans fenêtre de dessin.
 
     imageOriginaleTab = [None] * getScreenWidth()
+
     for i in range(getScreenWidth()):
         imageOriginaleTab[i] = [None] * getScreenHeight()
 
@@ -163,9 +169,13 @@ def dessinerRectangle(debut, couleurRectangle):
     while getMouse().button == 1:
         souris = getMouse()
         sleep(0.01)
+
         if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
             coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
+            rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
+                               coin2=struct(x=souris.x, y=souris.y))
+            restaurerImage(imageOriginale, rectangle)
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
 
@@ -204,7 +214,6 @@ def restaurerImage(imageOriginale, rectangle):
     # enregistrement qui contient deux champs (coin1 et coin2). coin1 et
     # coin2 sont aussi des enregistrements qui représentent des coordonnées
     # cartésiennes.
-    
     for i in range(rectangle.coin1.x, rectangle.coin2.x + 1):
         for j in range(rectangle.coin1.y, rectangle.coin2.y + 1):
             setPixel(i, j, imageOriginale[i][j])
@@ -230,19 +239,20 @@ def traiterProchainClic(boutons):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
-    global hauteurMenu
-    global couleurRectangle
+    global hauteurMenu, couleurRectangle
 
     while True:
         souris = getMouse()
         sleep(0.01)
         position = struct(x=souris.x, y=souris.y)
+
         if souris.button == 0 or souris.button == 2:
             continue
         else:
             if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
                 debut = position
                 couleur = couleurRectangle
+                imageOriginale = imageOriginaleTab()
                 dessinerRectangleFlottant(imageOriginale, debut, couleur)
             else:
                 bouton = trouverBouton(boutons, position)
@@ -260,13 +270,12 @@ def dessiner():
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
     global largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer
-  
+    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
+
     setScreenMode(largeur, hauteur)
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
     fillRectangle(0, 0, largeur, hauteurMenu, "#888")
     dessinerBoutons()
-
-    boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
     traiterProchainClic(boutons)
 
 
