@@ -58,6 +58,7 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
     coin2Tab = coin2Bouton(couleurs, taille, espace)
     boutons = []
     i = 0
+
     for _ in range(len(couleurs) + 1):
         if i == 0:
             effacer = True
