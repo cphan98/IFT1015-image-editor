@@ -24,6 +24,7 @@ def coin1Bouton(couleurs, taille, espace):
 
     coin1Tab = []   # tableau d'enregistrements  des coordonnées du coin supérieur gauche de chaque bouton
     i = 1
+
     for _ in range(len(couleurs) + 1):
         x = i * espace + (i - 1) * taille
         coin1Tab.append(struct(x=x, y=espace))
