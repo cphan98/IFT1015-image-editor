@@ -100,6 +100,7 @@ def dessinerEffacer(taille, coin1Tab):
     # effacer.
 
     k = 1
+
     for _ in range(taille - 2):
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + k, "#f00")
         setPixel(coin1Tab[0].x + k, coin1Tab[0].y + taille - 1 - k, "#f00")
