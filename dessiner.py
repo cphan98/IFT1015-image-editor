@@ -155,24 +155,6 @@ def imageOriginale():
     return imageOriginaleTab
 
 
-def dessinerRectangle(debut, couleurRectangle):
-
-    # La procédure dessinerRectangle dessine un rectangle dans le fenêtre de
-    # dessin tant que le bouton principal de la souris reste appuyé avec la
-    # couleur sélectionnée.
-
-    global hauteurMenu
-
-    while getMouse().button == 1:
-        souris = getMouse()
-        sleep(0.01)
-        if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
-            coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
-            coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
-            fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
-                          coin2.y - coin1.y, couleurRectangle)
-
-
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
@@ -182,9 +164,16 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
     # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
     # la couleur du rectangle.
 
-    global couleurRectangle
+    global hauteurMenu, couleurRectangle
 
-    dessinerRectangle(debut, couleurRectangle)
+    while getMouse().button == 1:
+        souris = getMouse()
+        sleep(0.01)
+        if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
+            coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
+            coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
+            fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
+                          coin2.y - coin1.y, couleurRectangle)
 
 
 def restaurerImage(imageOriginale, rectangle):
