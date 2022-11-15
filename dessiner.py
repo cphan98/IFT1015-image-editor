@@ -80,12 +80,15 @@ def dessinerBordures(couleurs, coin1Tab, coin2Tab):
         # bordure supérieure
         for x1 in range(coin1Tab[j].x, coin2Tab[j].x):
             setPixel(x1, coin1Tab[j].y, "#000")
+
         # bordure droite
         for y1 in range(coin1Tab[j].y, coin2Tab[j].y):
             setPixel(coin2Tab[j].x - 1, y1, "#000")
+
         # bordure inférieure
         for x2 in range(coin1Tab[j].x, coin2Tab[j].x):
             setPixel(x2, coin2Tab[j].y - 1, "#000")
+
         # bordure gauche
         for y2 in range(coin1Tab[j].y, coin2Tab[j].y):
             setPixel(coin1Tab[j].x, y2, "#000")
