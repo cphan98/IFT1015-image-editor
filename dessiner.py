@@ -104,10 +104,7 @@ def dessinerBoutons():
 
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
-    global couleurs
-    global taille
-    global espace
-    global couleurEffacer
+    global couleurs, taille, espace, couleurEffacer
 
     # dessiner les boutons
 
@@ -212,8 +209,7 @@ def traiterProchainClic(boutons):
     # modifiée. Si le clic a lieu dans la fenêtre de dessin, un rectangle
     # flottant est dessiné.
 
-    global hauteurMenu
-    global couleurRectangle
+    global hauteurMenu, couleurRectangle
 
     while True:
         souris = getMouse()
@@ -241,13 +237,7 @@ def dessiner():
 
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
-    global largeur
-    global hauteur
-    global hauteurMenu
-    global couleurs
-    global taille
-    global espace
-    global couleurEffacer
+    global largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer
 
     setScreenMode(largeur, hauteur)
     fillRectangle(0, hauteurMenu, largeur, hauteur - hauteurMenu, "#fff")
@@ -256,7 +246,6 @@ def dessiner():
 
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
     traiterProchainClic(boutons)
-
 
 def testDessiner():
 
