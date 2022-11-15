@@ -396,5 +396,43 @@ def testDessiner():
 
     # tests pour ajouterRectangle
 
+    image = [["#fff", "#fff"], ["#fff", "#fff"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=1, y=1))
+    couleur = "#f00"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#f00", "#f00"], ["#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=0))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#fff", "#fff"], [
+        "#00f", "#000", "#000"], ["#00f", "#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=0, y=2))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#00f", "#00f"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=1, y=1))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#00f", "#fff"], [
+        "#00f", "#00f", "#000"], ["#f00", "#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=2))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#00f", "#00f"], [
+        "#00f", "#00f", "#00f"], ["#00f", "#00f", "#00f"]]
+
 
 testDessiner()
