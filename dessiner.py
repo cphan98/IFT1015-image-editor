@@ -40,6 +40,7 @@ def coin2Bouton(couleurs, taille, espace):
     coin2Tab = []   # tableau d'enregistrements des coordonnées du coin inférieur droit de chaque bouton
     y = espace + taille
     i = 1
+
     for _ in range(len(couleurs) + 1):
         x = i * (espace + taille)
         coin2Tab.append(struct(x=x, y=y))
