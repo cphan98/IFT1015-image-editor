@@ -155,7 +155,6 @@ def imageOriginaleTab():
     for j in range(getScreenWidth()):
         for k in range(getScreenHeight()):
             imageOriginaleTab[j][k] = getPixel(j, k)
-
     return imageOriginaleTab
 
 
