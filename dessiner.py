@@ -111,15 +111,10 @@ def dessinerBoutons():
 
     # La procédure dessinerBoutons dessine les boutons dans la barre de menu.
 
-    global couleurs
-    global taille
-    global espace
-    global couleurEffacer
-
-    # dessiner les boutons
-
+    global couleurs, taille, espace, couleurEffacer
     coin1Tab = coin1Bouton(couleurs, taille, espace)
     coin2Tab = coin2Bouton(couleurs, taille, espace)
+
     for i in range(len(couleurs) + 1):
         if i == 0:
             fillRectangle(coin1Tab[i].x, coin1Tab[i].y,
