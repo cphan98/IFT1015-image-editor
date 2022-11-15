@@ -178,7 +178,6 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
             rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
                                coin2=struct(x=souris.x, y=souris.y))
-
             restaurerImage(imageOriginale, rectangle)
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
