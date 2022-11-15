@@ -140,18 +140,20 @@ def trouverBouton(boutons, position):
             continue
 
 
-def imageOriginale():
+def imageOriginaleTab():
 
     # La fonction imageOriginale retourne le tableau des tableaux contenants
     # les textes de couleurs de chaque pixel dans fenêtre de dessin.
 
     imageOriginaleTab = [None] * getScreenWidth()
+
     for i in range(getScreenWidth()):
         imageOriginaleTab[i] = [None] * getScreenHeight()
 
     for j in range(getScreenWidth()):
         for k in range(getScreenHeight()):
             imageOriginaleTab[j][k] = getPixel(j, k)
+
     return imageOriginaleTab
 
 
@@ -169,9 +171,14 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
     while getMouse().button == 1:
         souris = getMouse()
         sleep(0.01)
+
         if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
             coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
+            rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
+                               coin2=struct(x=souris.x, y=souris.y))
+
+            restaurerImage(imageOriginale, rectangle)
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
 
@@ -184,7 +191,6 @@ def restaurerImage(imageOriginale, rectangle):
     # enregistrement qui contient deux champs (coin1 et coin2). coin1 et
     # coin2 sont aussi des enregistrements qui représentent des coordonnées
     # cartésiennes.
-    
 
     for i in range(rectangle.coin1.x, rectangle.coin2.x + 1):
         for j in range(rectangle.coin1.y, rectangle.coin2.y + 1):
