@@ -173,11 +173,50 @@ def dessinerRectangle(debut, couleurRectangle):
         if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
             coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
-            rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
-                               coin2=struct(x=souris.x, y=souris.y))
-            restaurerImage(imageOriginale, rectangle)
+
+            # rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
+            #                    coin2=struct(x=souris.x, y=souris.y))
+            # restaurerImage(imageOriginale, rectangle)
+
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
+
+            if souris.x < debut.x and souris.y < debut.y:
+                x = min(debut.x, souris.x)
+                y = min(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=x, y=souris.y), coin2=struct(x=souris.x, y=debut.y))
+                rectangle2 = struct(coin1=struct(x=x, y=y),
+                                    coin2=struct(x=debut.x, y=souris.y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
+            elif souris.x > debut.x and souris.y < debut.y:
+                x = max(debut.x, souris.x)
+                y = min(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=souris.x, y=souris.y), coin2=struct(x=x, y=debut.y))
+                rectangle2 = struct(coin1=struct(
+                    x=debut.x, y=y), coin2=struct(x=x, y=souris.y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
+            elif souris.x > debut.x and souris.y > debut.y:
+                x = max(debut.x, souris.x)
+                y = max(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=souris.x, y=debut.y), coin2=struct(x=x, y=souris.y))
+                rectangle2 = struct(coin1=struct(
+                    x=debut.x, y=souris.y), coin2=struct(x=x, y=y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
+            else:
+                x = min(debut.x, souris.x)
+                y = max(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=x, y=debut.y), coin2=struct(x=souris.x, y=souris.y))
+                rectangle2 = struct(coin1=struct(
+                    x=x, y=souris.y), coin2=struct(x=debut.x, y=y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
 
 
 def dessinerRectangleFlottant(imageOriginale, debut, couleur):
@@ -269,6 +308,7 @@ def dessiner():
 
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
+
     global largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
 
@@ -334,7 +374,126 @@ def testDessiner():
 
     # tests pour restaurerImage
 
+    setScreenMode(2, 2)
+    setPixel(1, 1, "#fff")
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=1, y=1))
+    imageOriginale = [["#000", "#000"],
+                      ["#000", "#000"]]
+    restaurerImage(imageOriginale, rectangle)
+    assert exportScreen() == "#000#000\n#000#000"
+
+    setScreenMode(3, 3)
+    setPixel(1, 0, "#fff")
+    setPixel(1, 1, "#fff")
+    setPixel(1, 2, "#fff")
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=2))
+    imageOriginale = [["#000", "#000", "#000"],
+                      ["#000", "#000", "#000"],
+                      ["#000", "#000", "#000"]]
+    restaurerImage(imageOriginale, rectangle)
+    assert exportScreen() == "#000#000#000\n#000#000#000\n#000#000#000"
+
+    setScreenMode(3, 3)
+    setPixel(0, 1, "#fff")
+    setPixel(1, 1, "#fff")
+    setPixel(2, 1, "#fff")
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=2))
+    imageOriginale = [["#000", "#000", "#000"],
+                      ["#000", "#000", "#000"],
+                      ["#000", "#000", "#000"]]
+    restaurerImage(imageOriginale, rectangle)
+    assert exportScreen() == "#000#000#000\n#000#000#000\n#000#000#000"
+
+    setScreenMode(3, 3)
+    setPixel(0, 0, "#fff")
+    setPixel(0, 1, "#fff")
+    setPixel(0, 2, "#fff")
+    setPixel(1, 0, "#fff")
+    setPixel(1, 1, "#fff")
+    setPixel(1, 2, "#fff")
+    setPixel(2, 0, "#fff")
+    setPixel(2, 1, "#fff")
+    setPixel(2, 2, "#fff")
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=2))
+    imageOriginale = [["#000", "#000", "#000"],
+                      ["#000", "#000", "#000"],
+                      ["#000", "#000", "#000"]]
+    restaurerImage(imageOriginale, rectangle)
+    assert exportScreen() == "#000#000#000\n#000#000#000\n#000#000#000"
+
+    setScreenMode(4, 4)
+    setPixel(0, 0, "#f00")
+    setPixel(0, 1, "#f00")
+    setPixel(0, 2, "#f00")
+    setPixel(0, 3, "#f00")
+    rectangle = struct(coin1=struct(x=0, y=2), coin2=struct(x=3, y=3))
+    imageOriginale = [["#000", "#000", "#fff", "#fff"],
+                      ["#000", "#000", "#fff", "#fff"],
+                      ["#000", "#000", "#fff", "#fff"],
+                      ["#000", "#000", "#fff", "#fff"]]
+    restaurerImage(imageOriginale, rectangle)
+    assert exportScreen() == "#f00#000#000#000\n#f00#000#000#000\n#fff#fff#fff#fff\n#fff#fff#fff#fff"
+
+    setScreenMode(4, 4)
+    setPixel(0, 1, "#f00")
+    setPixel(1, 1, "#f00")
+    setPixel(2, 1, "#f00")
+    setPixel(3, 1, "#f00")
+    setPixel(0, 2, "#f00")
+    setPixel(1, 2, "#f00")
+    setPixel(2, 2, "#f00")
+    setPixel(3, 2, "#f00")
+    setPixel(0, 3, "#fff")
+    setPixel(1, 3, "#fff")
+    setPixel(2, 3, "#fff")
+    setPixel(3, 3, "#fff")
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=1, y=3))
+    imageOriginale = [["#000", "#000", "#fff", "#fff"],
+                      ["#000", "#000", "#fff", "#fff"],
+                      ["#000", "#000", "#fff", "#fff"],
+                      ["#000", "#000", "#fff", "#fff"]]
+    restaurerImage(imageOriginale, rectangle)
+    assert exportScreen() == "#000#000#000#000\n#000#000#f00#f00\n#fff#fff#f00#f00\n#fff#fff#fff#fff"
+
     # tests pour ajouterRectangle
+
+    image = [["#fff", "#fff"], ["#fff", "#fff"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=1, y=1))
+    couleur = "#f00"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#f00", "#f00"], ["#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=0))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#fff", "#fff"], [
+        "#00f", "#000", "#000"], ["#00f", "#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=0, y=2))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#00f", "#00f"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=1, y=1))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#00f", "#fff"], [
+        "#00f", "#00f", "#000"], ["#f00", "#f00", "#f00"]]
+
+    image = [["#fff", "#fff", "#fff"], [
+        "#000", "#000", "#000"], ["#f00", "#f00", "#f00"]]
+    rectangle = struct(coin1=struct(x=0, y=0), coin2=struct(x=2, y=2))
+    couleur = "#00f"
+    ajouterRectangle(image, rectangle, couleur)
+    assert image == [["#00f", "#00f", "#00f"], [
+        "#00f", "#00f", "#00f"], ["#00f", "#00f", "#00f"]]
 
 
 testDessiner()
