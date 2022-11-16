@@ -192,10 +192,6 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
             and souris.y < getScreenHeight()):
             coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
-
-            # rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
-            #                    coin2=struct(x=souris.x, y=souris.y))
-
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
 
@@ -238,7 +234,8 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
     rectangle = struct(coin1=coin1, coin2=coin2)
     ajouterRectangle(imageOriginale, rectangle, couleurRectangle)
-                
+
+
 def restaurerImage(imageOriginale, rectangle):
 
     # La procédure restaurerImage dessine une section rectangulaire de l'image
