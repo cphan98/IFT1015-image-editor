@@ -176,11 +176,50 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
         if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
             coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
-            rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
-                               coin2=struct(x=souris.x, y=souris.y))
-            restaurerImage(imageOriginale, rectangle)
+
+            # rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
+            #                    coin2=struct(x=souris.x, y=souris.y))
+            # restaurerImage(imageOriginale, rectangle)
+
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
+
+            if souris.x < debut.x and souris.y < debut.y:
+                x = min(debut.x, souris.x)
+                y = min(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=x, y=souris.y), coin2=struct(x=souris.x, y=debut.y))
+                rectangle2 = struct(coin1=struct(x=x, y=y),
+                                    coin2=struct(x=debut.x, y=souris.y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
+            elif souris.x > debut.x and souris.y < debut.y:
+                x = max(debut.x, souris.x)
+                y = min(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=souris.x, y=souris.y), coin2=struct(x=x, y=debut.y))
+                rectangle2 = struct(coin1=struct(
+                    x=debut.x, y=y), coin2=struct(x=x, y=souris.y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
+            elif souris.x > debut.x and souris.y > debut.y:
+                x = max(debut.x, souris.x)
+                y = max(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=souris.x, y=debut.y), coin2=struct(x=x, y=souris.y))
+                rectangle2 = struct(coin1=struct(
+                    x=debut.x, y=souris.y), coin2=struct(x=x, y=y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
+            else:
+                x = min(debut.x, souris.x)
+                y = max(debut.y, souris.y)
+                rectangle1 = struct(coin1=struct(
+                    x=x, y=debut.y), coin2=struct(x=souris.x, y=souris.y))
+                rectangle2 = struct(coin1=struct(
+                    x=x, y=souris.y), coin2=struct(x=debut.x, y=y))
+                restaurerImage(imageOriginale, rectangle1)
+                restaurerImage(imageOriginale, rectangle2)
 
 
 def restaurerImage(imageOriginale, rectangle):
@@ -248,6 +287,7 @@ def dessiner():
 
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
+
     global largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
 
