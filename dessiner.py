@@ -216,8 +216,8 @@ def dessinerRectangleFlottant(imageOriginale, debut, couleur):
                 restaurerImage(imageOriginale, rectangle1)
                 restaurerImage(imageOriginale, rectangle2)
 
-        rectangle = struct(coin1=coin1, coin2=coin2)
-        ajouterRectangle(imageOriginale, rectangle, couleurRectangle)
+    rectangle = struct(coin1=coin1, coin2=coin2)
+    ajouterRectangle(imageOriginale, rectangle, couleurRectangle)
 
 
 def restaurerImage(imageOriginale, rectangle):
