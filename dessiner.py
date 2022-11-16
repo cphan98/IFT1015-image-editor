@@ -21,8 +21,10 @@ def coin1Bouton(couleurs, taille, espace):
     # La fonction coin1Bouton retourne un tableau d'enregistrement des
     # coordonnées du coin supérieur gauche de chaque bouton de la barre de
     # menu.
-
-    coin1Tab = []   # tableau d'enregistrements  des coordonnées du coin supérieur gauche de chaque bouton
+    
+    # tableau d'enregistrements des coordonnées 
+    # du coin supérieur gauche de chaque bouton
+    coin1Tab = []   
     i = 1
 
     for _ in range(len(couleurs) + 1):
@@ -34,10 +36,12 @@ def coin1Bouton(couleurs, taille, espace):
 
 def coin2Bouton(couleurs, taille, espace):
 
-    # La fonction coin2Bouton retourne un tab;eau d'enregistrement des coordonnées du
-    # coin inférieur droit de chaque bouton de la barre menu.
+    # La fonction coin2Bouton retourne un tableau d'enregistrement
+    # des coordonnées du coin inférieur droit de chaque bouton de la barre menu.
 
-    coin2Tab = []   # tableau d'enregistrements des coordonnées du coin inférieur droit de chaque bouton
+    # tableau d'enregistrements des coordonnées 
+    # du coin inférieur droit de chaque bouton
+    coin2Tab = []   
     y = espace + taille
     i = 1
 
@@ -63,11 +67,17 @@ def creerBoutons(couleurs, taille, espace, couleurEffacer):
         if i == 0:
             effacer = True
             boutons.append(struct(
-                coin1=coin1Tab[i], coin2=coin2Tab[i], couleur=couleurEffacer, effacer=effacer))
+                coin1=coin1Tab[i],
+                coin2=coin2Tab[i],
+                couleur=couleurEffacer,
+                effacer=effacer))
         else:
             effacer = False
             boutons.append(struct(
-                coin1=coin1Tab[i], coin2=coin2Tab[i], couleur=couleurs[i - 1], effacer=effacer))
+                coin1=coin1Tab[i],
+                coin2=coin2Tab[i],
+                couleur=couleurs[i - 1], 
+                effacer=effacer))
         i += 1
     return boutons
 
@@ -136,7 +146,10 @@ def trouverBouton(boutons, position):
     # par les boutons.
 
     for i in range(len(boutons)):
-        if position.x >= boutons[i].coin1.x and position.x <= boutons[i].coin2.x and position.y >= boutons[i].coin1.y and position.y <= boutons[i].coin2.y:
+        if (position.x >= boutons[i].coin1.x 
+        and position.x <= boutons[i].coin2.x 
+        and position.y >= boutons[i].coin1.y 
+        and position.y <= boutons[i].coin2.y):
             return boutons[i]
         else:
             continue
@@ -158,25 +171,30 @@ def imageOriginaleTab():
     return imageOriginaleTab
 
 
-def dessinerRectangle(debut, couleurRectangle):
+def dessinerRectangleFlottant(imageOriginale, debut, couleur):
 
-    # La procédure dessinerRectangle dessine un rectangle dans le fenêtre de
-    # dessin tant que le bouton principal de la souris reste appuyé avec la
-    # couleur sélectionnée.
+    # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
+    # que le bouton de la souris de l'utilisateur reste enfoncé. Elle prend
+    # comme paramètre imageOriginal, un tableau de tableaux de textes de
+    # couleurs, debut, un enregistrement qui contient les coordonées
+    # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
+    # la couleur du rectangle.
 
-    global hauteurMenu
+    global hauteurMenu, couleurRectangle
 
     while getMouse().button == 1:
         souris = getMouse()
         sleep(0.01)
 
-        if souris.x >= 0 and souris.x < getScreenWidth() and souris.y >= hauteurMenu and souris.y < getScreenHeight():
+        if (souris.x >= 0
+            and souris.x < getScreenWidth()
+            and souris.y >= hauteurMenu
+            and souris.y < getScreenHeight()):
             coin1 = struct(x=min(debut.x, souris.x), y=min(debut.y, souris.y))
             coin2 = struct(x=max(debut.x, souris.x), y=max(debut.y, souris.y))
 
             # rectangle = struct(coin1=struct(x=debut.x, y=debut.y),
             #                    coin2=struct(x=souris.x, y=souris.y))
-            # restaurerImage(imageOriginale, rectangle)
 
             fillRectangle(coin1.x, coin1.y, coin2.x - coin1.x,
                           coin2.y - coin1.y, couleurRectangle)
@@ -218,33 +236,9 @@ def dessinerRectangle(debut, couleurRectangle):
                 restaurerImage(imageOriginale, rectangle1)
                 restaurerImage(imageOriginale, rectangle2)
 
-
-def dessinerRectangleFlottant(imageOriginale, debut, couleur):
-
-    # La procédure dessinerRectangleFlottant anime le rectangle flottant tant
-    # que le bouton de la souris de l'utilisateur reste enfoncé. Elle prend
-    # comme paramètre imageOriginal, un tableau de tableaux de textes de
-    # couleurs, debut, un enregistrement qui contient les coordonées
-    # cartésiennes du clic initial de l'utilisateur, et couleur, le text de
-    # la couleur du rectangle.
-
-    while getMouse().button == 1:
-        souris = getMouse()
-        sleep(0.01)
-
-        coin1 = struct(x=min(debut.x,souris.x),
-                        y=min(debut.y,souris.y))
-        coin2 = struct(x=max(debut.x,souris.x)+1,
-                        y=max(debut.y,souris.y)+1)
-
-        restaurerImage(imageOriginale, struct(coin1=struct(x=debut.x, y=debut.y),
-                                            coin2=struct(x=souris.x, y=souris.y)))        
-        
-        fillRectangle(coin1.x, coin1.y, coin2.x-coin1.x, coin2.y-coin1.y, couleur)
-
-
-
-
+    rectangle = struct(coin1=coin1, coin2=coin2)
+    ajouterRectangle(imageOriginale, rectangle, couleurRectangle)
+                
 def restaurerImage(imageOriginale, rectangle):
 
     # La procédure restaurerImage dessine une section rectangulaire de l'image
@@ -253,6 +247,7 @@ def restaurerImage(imageOriginale, rectangle):
     # enregistrement qui contient deux champs (coin1 et coin2). coin1 et
     # coin2 sont aussi des enregistrements qui représentent des coordonnées
     # cartésiennes.
+
     for i in range(rectangle.coin1.x, rectangle.coin2.x + 1):
         for j in range(rectangle.coin1.y, rectangle.coin2.y + 1):
             setPixel(i, j, imageOriginale[i][j])
@@ -267,7 +262,8 @@ def ajouterRectangle(image, rectangle, couleur):
 
     for i in range(rectangle.coin1.x, rectangle.coin2.x+1):
         for j in range(rectangle.coin1.y, rectangle.coin2.y+1):
-            image[j][i] = couleur
+            image[i][j] = couleur
+
 
 def traiterProchainClic(boutons):
 
@@ -288,7 +284,10 @@ def traiterProchainClic(boutons):
         if souris.button == 0 or souris.button == 2:
             continue
         else:
-            if position.x > 0 and position.x < getScreenWidth() and position.y > hauteurMenu and position.y < getScreenHeight():
+            if (position.x > 0
+                and position.x < getScreenWidth()
+                and position.y > hauteurMenu
+                and position.y < getScreenHeight()):
                 debut = position
                 couleur = couleurRectangle
                 imageOriginale = imageOriginaleTab()
@@ -309,7 +308,7 @@ def dessiner():
     # La procédure dessiner fait appel aux procédures et fonctions précédentes
     # pour démarrer l'éditeur d'image.
 
-    global largeur, hauteur, hauteurMenu, couleurs, taille, espace, couleurEffacer
+    global largeur,hauteur,hauteurMenu,couleurs,taille,espace,couleurEffacer
     boutons = creerBoutons(couleurs, taille, espace, couleurEffacer)
 
     setScreenMode(largeur, hauteur)
@@ -343,33 +342,84 @@ def testDessiner():
 
     assert creerBoutons([], 12, 6, "#fff") == [struct(coin1=struct(
         x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)]
-    assert creerBoutons(["#fff"], 12, 6, "#fff") == [struct(coin1=struct(x=6, y=6), coin2=struct(
-        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)]
-    assert creerBoutons(["#fff", "#000"], 12, 6, "#fff") == [struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(
-        x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False), struct(coin1=struct(x=42, y=6), coin2=struct(x=54, y=18), couleur="#000", effacer=False)]
-    assert creerBoutons(["#000", "#f00"], 12, 6, "#00f") == [struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#00f", effacer=True), struct(coin1=struct(
-        x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False), struct(coin1=struct(x=42, y=6), coin2=struct(x=54, y=18), couleur="#f00", effacer=False)]
-    assert creerBoutons(["#f00"], 4, 1, "#000") == [struct(coin1=struct(x=1, y=1), coin2=struct(
-        x=5, y=5), couleur="#000", effacer=True), struct(coin1=struct(x=6, y=1), coin2=struct(x=10, y=5), couleur="#f00", effacer=False)]
+    assert creerBoutons(["#fff"], 12, 6, "#fff") == [struct(coin1=struct(x=6, y=6),
+                                                            coin2=struct(
+        x=18, y=18),couleur="#fff",effacer=True),struct(coin1=struct(x=24,y=6),
+                                                        coin2=struct(x=36,y=18),
+                                                        couleur="#fff",
+                                                        effacer=False)]
+    assert creerBoutons(["#fff", "#000"], 12, 6, "#fff") == [struct(coin1=struct(x=6,y=6),
+                                                                    coin2=struct(x=18, y=18),
+                                                                    couleur="#fff",effacer=True),
+                                                             struct(coin1=struct(
+        x=24, y=6), 
+        coin2=struct(x=36, y=18),couleur="#fff",effacer=False),
+                                                             struct(coin1=struct(x=42,y=6),
+                                                                    coin2=struct(x=54, y=18),
+                                                                    couleur="#000",
+                                                                    effacer=False)]
+    assert creerBoutons(["#000", "#f00"],12,6,"#00f")==[struct(coin1=struct(x=6,y=6),
+                                                               coin2=struct(x=18, y=18), 
+                                                               couleur="#00f",
+                                                               effacer=True),
+                                                        struct(coin1=struct(
+        x=24, y=6),
+                                                               coin2=struct(x=36,y=18),
+                                                               couleur="#000",
+                                                               effacer=False),
+                                                        struct(coin1=struct(x=42, y=6),
+                                                               coin2=struct(x=54, y=18),
+                                                               couleur="#f00",
+                                                               effacer=False)]
+    assert creerBoutons(["#f00"], 4, 1, "#000") == [struct(coin1=struct(x=1, y=1),
+                                                           coin2=struct(
+        x=5, y=5), couleur="#000", effacer=True),
+                                                    struct(coin1=struct(x=6, y=1),
+                                                           coin2=struct(x=10, y=5),
+                                                           couleur="#f00",
+                                                           effacer=False)]
 
     # tests pour trouverBouton
 
     assert trouverBouton([], struct(x=12, y=12)) == None
-    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
-        x=12, y=12)) == struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)
-    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
-        x=3, y=3)) == None
-    assert trouverBouton([struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False)], struct(
-        x=30, y=12)) == struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False)
-    assert trouverBouton([struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#000", effacer=False)], struct(
+    assert trouverBouton([struct(coin1=struct(x=6,y=6),coin2=struct(x=18,y=18),
+                                 couleur="#fff", effacer=True)], struct(
+        x=12,y=12))==struct(coin1=struct(x=6, y=6),coin2=struct(x=18, y=18),
+                            couleur="#fff",effacer=True)
+    assert trouverBouton([struct(coin1=struct(x=6, y=6),
+                                 coin2=struct(x=18, y=18),
+                                 couleur="#fff",effacer=True)],
+                         struct(x=3, y=3)) == None
+    assert trouverBouton([struct(coin1=struct(x=24,y=6),coin2=struct(x=36,y=18),
+                                 couleur="#000", effacer=False)], struct(
+        x=30,y=12))==struct(coin1=struct(x=24, y=6),coin2=struct(x=36, y=18),
+                            couleur="#000", effacer=False)
+    assert trouverBouton([struct(coin1=struct(x=24,y=6),coin2=struct(x=36,y=18),
+                                 couleur="#000",effacer=False)],struct(
         x=21, y=12)) == None
     assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
-        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=12, y=12)) == struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)
-    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
-        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=30, y=12)) == struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)
-    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(
-        x=18, y=18), couleur="#fff", effacer=True), struct(coin1=struct(x=24, y=6), coin2=struct(x=36, y=18), couleur="#fff", effacer=False)], struct(x=21, y=12)) == None
-    assert trouverBouton([struct(coin1=struct(x=6, y=6), coin2=struct(x=18, y=18), couleur="#fff", effacer=True)], struct(
+        x=18, y=18),couleur="#fff",effacer=True),
+                          struct(coin1=struct(x=24,y=6),coin2=struct(x=36, y=18),
+                                 couleur="#fff", effacer=False)],
+                         struct(x=12,y=12))==struct(coin1=struct(x=6,y=6),
+                                                    coin2=struct(x=18,y=18),
+                                                    couleur="#fff",effacer=True)
+    assert trouverBouton([struct(coin1=struct(x=6, y=6),
+                                 coin2=struct(
+        x=18, y=18), couleur="#fff", effacer=True),struct(coin1=struct(x=24,y=6),
+                                                          coin2=struct(x=36,y=18),
+                                                          couleur="#fff",effacer=False)],
+                         struct(x=30,y=12))==struct(coin1=struct(x=24,y=6),
+                                                    coin2=struct(x=36,y=18),
+                                                    couleur="#fff",
+                                                    effacer=False)
+    assert trouverBouton([struct(coin1=struct(x=6,y=6),coin2=struct(
+        x=18, y=18), couleur="#fff", effacer=True),
+                          struct(coin1=struct(x=24,y=6),coin2=struct(x=36,y=18),
+                                 couleur="#fff", effacer=False)],
+                         struct(x=21, y=12)) == None
+    assert trouverBouton([struct(coin1=struct(x=6,y=6),coin2=struct(x=18, y=18),
+                                 couleur="#fff", effacer=True)], struct(
         x=12, y=3)) == None
 
     # tests pour restaurerImage
